@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.author       = "SEEK"
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/SEEK-Jobs/seek-stackable.git", :tag => s.version }
-  s.source_files  = "Classes", "Classes/**/*.{h,swift}"
-  s.public_header_files = "Classes/**/*.h"
+  s.source_files  = "Classes/*.swift"
+  s.public_header_files = "*.h"
 end
