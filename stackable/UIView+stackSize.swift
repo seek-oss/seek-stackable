@@ -4,7 +4,7 @@
 import UIKit
 
 extension UIView {
-    func stackSize(size: CGSize) -> FixedSizeStackable {
+    public func stackSize(size: CGSize) -> FixedSizeStackable {
         return FixedSizeStackable(view: self, size: size)
     }
 }

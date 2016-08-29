@@ -7,7 +7,7 @@ public class FixedSizeStackable: StackableItem {
     var view: UIView
     var size: CGSize
     
-    init(view: UIView, size: CGSize) {
+    public init(view: UIView, size: CGSize) {
         self.view = view
         self.size = size
     }
