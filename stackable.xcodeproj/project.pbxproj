@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D1BE5D61D73BC0E005DAA77 /* CGRectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5CC1D73BC0E005DAA77 /* CGRectProtocol.swift */; };
-		9D1BE5D71D73BC0E005DAA77 /* FixedSizeStackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5CD1D73BC0E005DAA77 /* FixedSizeStackable.swift */; };
-		9D1BE5D81D73BC0E005DAA77 /* FrameArray+bottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5CE1D73BC0E005DAA77 /* FrameArray+bottom.swift */; };
-		9D1BE5D91D73BC0E005DAA77 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5CF1D73BC0E005DAA77 /* HStack.swift */; };
-		9D1BE5DA1D73BC0E005DAA77 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5D01D73BC0E005DAA77 /* Stack.swift */; };
-		9D1BE5DB1D73BC0E005DAA77 /* Stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5D11D73BC0E005DAA77 /* Stackable.swift */; };
-		9D1BE5DC1D73BC0E005DAA77 /* StackableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5D21D73BC0E005DAA77 /* StackableItem.swift */; };
-		9D1BE5DD1D73BC0E005DAA77 /* UILabel+stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5D31D73BC0E005DAA77 /* UILabel+stackable.swift */; };
-		9D1BE5DE1D73BC0E005DAA77 /* UIView+stackSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5D41D73BC0E005DAA77 /* UIView+stackSize.swift */; };
-		9D1BE5DF1D73BC0E005DAA77 /* VStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1BE5D51D73BC0E005DAA77 /* VStack.swift */; };
+		9D1831D31D73EDE100A53419 /* CGRectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831C91D73EDE100A53419 /* CGRectProtocol.swift */; };
+		9D1831D41D73EDE100A53419 /* FixedSizeStackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CA1D73EDE100A53419 /* FixedSizeStackable.swift */; };
+		9D1831D51D73EDE100A53419 /* FrameArray+bottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CB1D73EDE100A53419 /* FrameArray+bottom.swift */; };
+		9D1831D61D73EDE100A53419 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CC1D73EDE100A53419 /* HStack.swift */; };
+		9D1831D71D73EDE100A53419 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CD1D73EDE100A53419 /* Stack.swift */; };
+		9D1831D81D73EDE100A53419 /* Stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CE1D73EDE100A53419 /* Stackable.swift */; };
+		9D1831D91D73EDE100A53419 /* StackableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CF1D73EDE100A53419 /* StackableItem.swift */; };
+		9D1831DA1D73EDE100A53419 /* UILabel+stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831D01D73EDE100A53419 /* UILabel+stackable.swift */; };
+		9D1831DB1D73EDE100A53419 /* UIView+stackSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831D11D73EDE100A53419 /* UIView+stackSize.swift */; };
+		9D1831DC1D73EDE100A53419 /* VStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831D21D73EDE100A53419 /* VStack.swift */; };
 		9D38FEDC1D73A077001CB50F /* stackable.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D38FEDB1D73A077001CB50F /* stackable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9D38FEE31D73A078001CB50F /* stackable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D38FED81D73A077001CB50F /* stackable.framework */; };
 		9D5447291D73A48000ED0AE7 /* HStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447211D73A48000ED0AE7 /* HStackTests.swift */; };
@@ -40,16 +40,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9D1BE5CC1D73BC0E005DAA77 /* CGRectProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CGRectProtocol.swift; path = Classes/CGRectProtocol.swift; sourceTree = "<group>"; };
-		9D1BE5CD1D73BC0E005DAA77 /* FixedSizeStackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FixedSizeStackable.swift; path = Classes/FixedSizeStackable.swift; sourceTree = "<group>"; };
-		9D1BE5CE1D73BC0E005DAA77 /* FrameArray+bottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FrameArray+bottom.swift"; path = "Classes/FrameArray+bottom.swift"; sourceTree = "<group>"; };
-		9D1BE5CF1D73BC0E005DAA77 /* HStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HStack.swift; path = Classes/HStack.swift; sourceTree = "<group>"; };
-		9D1BE5D01D73BC0E005DAA77 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stack.swift; path = Classes/Stack.swift; sourceTree = "<group>"; };
-		9D1BE5D11D73BC0E005DAA77 /* Stackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Stackable.swift; path = Classes/Stackable.swift; sourceTree = "<group>"; };
-		9D1BE5D21D73BC0E005DAA77 /* StackableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StackableItem.swift; path = Classes/StackableItem.swift; sourceTree = "<group>"; };
-		9D1BE5D31D73BC0E005DAA77 /* UILabel+stackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UILabel+stackable.swift"; path = "Classes/UILabel+stackable.swift"; sourceTree = "<group>"; };
-		9D1BE5D41D73BC0E005DAA77 /* UIView+stackSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+stackSize.swift"; path = "Classes/UIView+stackSize.swift"; sourceTree = "<group>"; };
-		9D1BE5D51D73BC0E005DAA77 /* VStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VStack.swift; path = Classes/VStack.swift; sourceTree = "<group>"; };
+		9D1831C91D73EDE100A53419 /* CGRectProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectProtocol.swift; sourceTree = "<group>"; };
+		9D1831CA1D73EDE100A53419 /* FixedSizeStackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedSizeStackable.swift; sourceTree = "<group>"; };
+		9D1831CB1D73EDE100A53419 /* FrameArray+bottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FrameArray+bottom.swift"; sourceTree = "<group>"; };
+		9D1831CC1D73EDE100A53419 /* HStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HStack.swift; sourceTree = "<group>"; };
+		9D1831CD1D73EDE100A53419 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		9D1831CE1D73EDE100A53419 /* Stackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stackable.swift; sourceTree = "<group>"; };
+		9D1831CF1D73EDE100A53419 /* StackableItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackableItem.swift; sourceTree = "<group>"; };
+		9D1831D01D73EDE100A53419 /* UILabel+stackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+stackable.swift"; sourceTree = "<group>"; };
+		9D1831D11D73EDE100A53419 /* UIView+stackSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+stackSize.swift"; sourceTree = "<group>"; };
+		9D1831D21D73EDE100A53419 /* VStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VStack.swift; sourceTree = "<group>"; };
 		9D38FED81D73A077001CB50F /* stackable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = stackable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D38FEDB1D73A077001CB50F /* stackable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stackable.h; sourceTree = "<group>"; };
 		9D38FEDD1D73A077001CB50F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -84,23 +84,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9D1BE5CB1D73BC02005DAA77 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				9D1BE5CC1D73BC0E005DAA77 /* CGRectProtocol.swift */,
-				9D1BE5CD1D73BC0E005DAA77 /* FixedSizeStackable.swift */,
-				9D1BE5CE1D73BC0E005DAA77 /* FrameArray+bottom.swift */,
-				9D1BE5CF1D73BC0E005DAA77 /* HStack.swift */,
-				9D1BE5D01D73BC0E005DAA77 /* Stack.swift */,
-				9D1BE5D11D73BC0E005DAA77 /* Stackable.swift */,
-				9D1BE5D21D73BC0E005DAA77 /* StackableItem.swift */,
-				9D1BE5D31D73BC0E005DAA77 /* UILabel+stackable.swift */,
-				9D1BE5D41D73BC0E005DAA77 /* UIView+stackSize.swift */,
-				9D1BE5D51D73BC0E005DAA77 /* VStack.swift */,
-			);
-			name = Classes;
-			sourceTree = "<group>";
-		};
 		9D38FECE1D73A077001CB50F = {
 			isa = PBXGroup;
 			children = (
@@ -122,7 +105,16 @@
 		9D38FEDA1D73A077001CB50F /* stackable */ = {
 			isa = PBXGroup;
 			children = (
-				9D1BE5CB1D73BC02005DAA77 /* Classes */,
+				9D1831C91D73EDE100A53419 /* CGRectProtocol.swift */,
+				9D1831CA1D73EDE100A53419 /* FixedSizeStackable.swift */,
+				9D1831CB1D73EDE100A53419 /* FrameArray+bottom.swift */,
+				9D1831CC1D73EDE100A53419 /* HStack.swift */,
+				9D1831CD1D73EDE100A53419 /* Stack.swift */,
+				9D1831CE1D73EDE100A53419 /* Stackable.swift */,
+				9D1831CF1D73EDE100A53419 /* StackableItem.swift */,
+				9D1831D01D73EDE100A53419 /* UILabel+stackable.swift */,
+				9D1831D11D73EDE100A53419 /* UIView+stackSize.swift */,
+				9D1831D21D73EDE100A53419 /* VStack.swift */,
 				9D38FEDB1D73A077001CB50F /* stackable.h */,
 				9D38FEDD1D73A077001CB50F /* Info.plist */,
 			);
@@ -253,16 +245,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D1BE5DB1D73BC0E005DAA77 /* Stackable.swift in Sources */,
-				9D1BE5D71D73BC0E005DAA77 /* FixedSizeStackable.swift in Sources */,
-				9D1BE5DC1D73BC0E005DAA77 /* StackableItem.swift in Sources */,
-				9D1BE5DF1D73BC0E005DAA77 /* VStack.swift in Sources */,
-				9D1BE5DA1D73BC0E005DAA77 /* Stack.swift in Sources */,
-				9D1BE5D91D73BC0E005DAA77 /* HStack.swift in Sources */,
-				9D1BE5DD1D73BC0E005DAA77 /* UILabel+stackable.swift in Sources */,
-				9D1BE5D61D73BC0E005DAA77 /* CGRectProtocol.swift in Sources */,
-				9D1BE5D81D73BC0E005DAA77 /* FrameArray+bottom.swift in Sources */,
-				9D1BE5DE1D73BC0E005DAA77 /* UIView+stackSize.swift in Sources */,
+				9D1831D81D73EDE100A53419 /* Stackable.swift in Sources */,
+				9D1831D41D73EDE100A53419 /* FixedSizeStackable.swift in Sources */,
+				9D1831D91D73EDE100A53419 /* StackableItem.swift in Sources */,
+				9D1831DC1D73EDE100A53419 /* VStack.swift in Sources */,
+				9D1831D71D73EDE100A53419 /* Stack.swift in Sources */,
+				9D1831D61D73EDE100A53419 /* HStack.swift in Sources */,
+				9D1831DA1D73EDE100A53419 /* UILabel+stackable.swift in Sources */,
+				9D1831D31D73EDE100A53419 /* CGRectProtocol.swift in Sources */,
+				9D1831D51D73EDE100A53419 /* FrameArray+bottom.swift in Sources */,
+				9D1831DB1D73EDE100A53419 /* UIView+stackSize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
