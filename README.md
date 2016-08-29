@@ -17,8 +17,8 @@ We wanted to be able to layout variable height UITableViewCell's without paying 
 
 # What it's not
 - stackable is not a replacement for UIStackView
-  - stackable is not meant to be dynamic like UIStackView, relying in immutable frames instead
-  - Currently a number of features in UIStackView are not available in stackable such as alignment options but that will change over time
+  - stackable is not meant to be dynamic like UIStackView, relying on immutable frames instead
+  - Currently a number of features in UIStackView are not available in stackable such as alignment options but this will change over time
 - stackable is not based on AutoLayout
   - AutoLayout is powerful but difficult to tune for performance
 
