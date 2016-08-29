@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = 'stackable'
-  s.version      = '0.1.4'
-  s.license      = { :type => 'MIT, :file => 'LICENSE' }
+  s.version      = '0.1.5'
+  s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.summary      = 'iOS framework for laying out nested views vertically and horizontally'
   
   s.homepage     = 'https://github.com/SEEK-Jobs/seek-stackable'
