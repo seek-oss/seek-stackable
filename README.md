@@ -22,6 +22,11 @@ We wanted to be able to layout variable height UITableViewCell's without paying 
 - stackable is not based on AutoLayout
   - AutoLayout is powerful but difficult to tune for performance
 
+## Current Limitations
+- integration has only been verified with UILabel and UIImageView
+- no alignment options
+- no distribution options
+
 ## example
 
 ```
