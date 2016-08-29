@@ -8,7 +8,7 @@ public class VStack: Stack  {
     public let spacing: CGFloat
     public let layoutMargins: UIEdgeInsets
     
-    init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsetsZero, thingsToStack: [Stackable]) {
+    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsetsZero, thingsToStack: [Stackable]) {
         self.spacing = spacing
         self.layoutMargins = layoutMargins
         self.thingsToStack = thingsToStack
