@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'stackable'
-  s.version      = '0.1.5'
+  s.version      = '0.1.6'
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.summary      = 'iOS framework for laying out nested views vertically and horizontally'
   
@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '8.0'
   s.source       = { :git => 'https://github.com/SEEK-Jobs/seek-stackable.git', :tag => s.version }
-  s.source_files  = 'stackable/Classes/*.swift'
+  s.source_files  = 'stackable/**/*.swift'
   s.frameworks   = 'UIKit'
+  s.requires_arc = true
 end
