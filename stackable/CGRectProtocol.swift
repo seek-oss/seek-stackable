@@ -3,7 +3,7 @@
 
 import UIKit
 
-protocol CGRectProtocol {
+public protocol CGRectProtocol {
     var origin: CGPoint { get }
     var size: CGSize { get }
 }

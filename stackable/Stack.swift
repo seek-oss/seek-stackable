@@ -3,7 +3,7 @@
 
 import UIKit
 
-protocol Stack: class, Stackable {
+public protocol Stack: class, Stackable {
     var thingsToStack: [Stackable] { get }
     var spacing: CGFloat { get }
     var layoutMargins: UIEdgeInsets { get }
@@ -11,7 +11,7 @@ protocol Stack: class, Stackable {
 }
 
 extension Stack {
-    var hidden: Bool {
+    public var hidden: Bool {
         return (self.thingsToStack.filter({ !$0.hidden }).count == 0)
     }
     

@@ -3,10 +3,10 @@
 
 import UIKit
 
-class VStack: Stack  {
-    let thingsToStack: [Stackable]
-    let spacing: CGFloat
-    let layoutMargins: UIEdgeInsets
+public class VStack: Stack  {
+    public let thingsToStack: [Stackable]
+    public let spacing: CGFloat
+    public let layoutMargins: UIEdgeInsets
     
     init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsetsZero, thingsToStack: [Stackable]) {
         self.spacing = spacing
@@ -14,7 +14,7 @@ class VStack: Stack  {
         self.thingsToStack = thingsToStack
     }
     
-    func framesForLayout(width: CGFloat, origin: CGPoint) -> [CGRect] {
+    public func framesForLayout(width: CGFloat, origin: CGPoint) -> [CGRect] {
         var origin = origin
         var width = width
         if layoutMargins != UIEdgeInsetsZero {

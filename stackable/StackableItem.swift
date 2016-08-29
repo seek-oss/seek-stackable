@@ -3,6 +3,6 @@
 
 import UIKit
 
-protocol StackableItem: Stackable {
+public protocol StackableItem: Stackable {
     func heightForWidth(width: CGFloat) -> CGFloat    
 }

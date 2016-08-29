@@ -3,10 +3,10 @@
 
 import UIKit
 
-class HStack: Stack {
-    let thingsToStack: [Stackable]
-    let spacing: CGFloat
-    let layoutMargins: UIEdgeInsets
+public class HStack: Stack {
+    public let thingsToStack: [Stackable]
+    public let spacing: CGFloat
+    public let layoutMargins: UIEdgeInsets
     
     init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsetsZero, thingsToStack: [Stackable]) {
         self.spacing = spacing
@@ -14,7 +14,7 @@ class HStack: Stack {
         self.thingsToStack = thingsToStack
     }
     
-    func framesForLayout(width: CGFloat, origin: CGPoint) -> [CGRect] {
+    public func framesForLayout(width: CGFloat, origin: CGPoint) -> [CGRect] {
         // TODO: add adjustments for layoutMargins (not currently needed so okay to defer)
         
         let thingsToStack = self.visibleThingsToStack()

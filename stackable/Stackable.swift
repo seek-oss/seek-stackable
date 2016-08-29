@@ -3,6 +3,6 @@
 
 import UIKit
 
-protocol Stackable {
+public protocol Stackable {
     var hidden: Bool { get }
 }

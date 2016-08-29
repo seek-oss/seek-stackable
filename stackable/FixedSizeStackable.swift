@@ -3,7 +3,7 @@
 
 import UIKit
 
-class FixedSizeStackable: StackableItem {
+public class FixedSizeStackable: StackableItem {
     var view: UIView
     var size: CGSize
     
@@ -12,11 +12,11 @@ class FixedSizeStackable: StackableItem {
         self.size = size
     }
     
-    func heightForWidth(width: CGFloat) -> CGFloat {
+    public func heightForWidth(width: CGFloat) -> CGFloat {
         return self.size.height
     }
     
-    var hidden: Bool {
+    public var hidden: Bool {
         return view.hidden
     }
 }
