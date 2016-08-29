@@ -38,7 +38,7 @@ extension Stack {
         return views
     }
     
-    func layoutWithFrames(frames: [CGRect]) {
+    public func layoutWithFrames(frames: [CGRect]) {
         let views = self.viewsToLayout()
 
         assert(frames.count == views.count, "layoutWithFrames could not be performed because of frame(\(frames.count)) / view(\(views.count)) count mismatch")
@@ -50,11 +50,11 @@ extension Stack {
         }
     }
 
-    func heightForFrames(frames: [CGRect]) -> CGFloat {
+    public func heightForFrames(frames: [CGRect]) -> CGFloat {
         return frames.bottom + self.layoutMargins.bottom
     }
 
-    func framesForLayout(width: CGFloat) -> [CGRect] {
+    public func framesForLayout(width: CGFloat) -> [CGRect] {
         return self.framesForLayout(width, origin: CGPointZero)
     }
 }
