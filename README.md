@@ -31,7 +31,7 @@ We wanted to be able to layout variable height UITableViewCell's without paying 
   let attribute3 = UILabel()
   let logoImageView = UIImageView()
   
-  return VStack(spacing: 2, thingsToStack: [
+  let stack = VStack(spacing: 2, thingsToStack: [
     HStack(spacing: 10, thingsToStack: [
       VStack(spacing: 1, thingsToStack: [
         attribute1,
@@ -42,4 +42,15 @@ We wanted to be able to layout variable height UITableViewCell's without paying 
     ])
     descriptionLabel
   ])
+  
+  let width = self.frame.size.width
+  
+  // give me the frames
+  let stackedFrames = stack.framesForLayout(width)
+  
+  // how tall is the stack?
+  let height = stack.heightForFrames(stackedFrames)
+  
+  // lay the frames out
+  stack.layoutWithFrames(stackedFrames)
 ```
