@@ -44,7 +44,7 @@ We wanted to be able to layout variable height UITableViewCell's without paying 
         attribute3
       ]),
       logoImageView.stackSize(100, 100)
-    ])
+    ]),
     descriptionLabel
   ])
   
