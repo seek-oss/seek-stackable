@@ -7,7 +7,7 @@ import XCTest
 
 class UIView_stackSize_Tests: XCTestCase {
     func test_stackSize_should_return_expected_result() {
-        let size = CGSizeMake(100, 50)
+        let size = CGSize(width: 100, height: 50)
         
         let view = UIView()
         let result = view.stackSize(size)

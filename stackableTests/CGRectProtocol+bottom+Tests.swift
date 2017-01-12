@@ -12,7 +12,7 @@ class CGRectProtocol_bottom_Tests: XCTestCase {
         let width: CGFloat = 100
         let height: CGFloat = 50
         
-        let rect = CGRectMake(x, y, width, height)
+        let rect = CGRect(x: x, y: y, width: width, height: height)
         
         XCTAssertEqual(rect.bottom, y + height)
     }

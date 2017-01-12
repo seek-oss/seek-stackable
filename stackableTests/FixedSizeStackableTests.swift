@@ -8,7 +8,7 @@ import XCTest
 class FixedSizeStackableTests: XCTestCase {
     func test_view_should_return_expected() {
         let view = UIView()
-        let stackable = FixedSizeStackable(view: view, size: CGSizeMake(100, 50))
+        let stackable = FixedSizeStackable(view: view, size: CGSize(width: 100, height: 50))
         
         XCTAssertTrue(stackable.view === view)
     }
@@ -16,7 +16,7 @@ class FixedSizeStackableTests: XCTestCase {
     func test_size_should_return_expected() {
         let width: CGFloat = 100
         let height: CGFloat = 50
-        let stackable = FixedSizeStackable(view: UIView(), size: CGSizeMake(width, height))
+        let stackable = FixedSizeStackable(view: UIView(), size: CGSize(width: width, height: height))
         
         XCTAssertEqual(stackable.size.width, width)
         XCTAssertEqual(stackable.size.height, height)
@@ -25,7 +25,7 @@ class FixedSizeStackableTests: XCTestCase {
     func test_heightForWidth_should_return_expected() {
         let width: CGFloat = 100
         let height: CGFloat = 50
-        let stackable = FixedSizeStackable(view: UIView(), size: CGSizeMake(width, height))
+        let stackable = FixedSizeStackable(view: UIView(), size: CGSize(width: width, height: height))
         
         let result = stackable.heightForWidth(width)
         
@@ -34,11 +34,11 @@ class FixedSizeStackableTests: XCTestCase {
     
     func test_hidden_should_return_expected() {
         let view = UIView()
-        let stackable = FixedSizeStackable(view: view, size: CGSizeMake(100, 50))
+        let stackable = FixedSizeStackable(view: view, size: CGSize(width: 100, height: 50))
         
-        view.hidden = false
+        view.isHidden = false
         XCTAssertFalse(stackable.hidden)
-        view.hidden = true
+        view.isHidden = true
         XCTAssertTrue(stackable.hidden)
     }
 }
