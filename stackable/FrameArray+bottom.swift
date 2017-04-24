@@ -8,7 +8,7 @@ extension Array where Element: CGRectProtocol {
     var bottom: CGFloat {
         var bottom: CGFloat = 0.0
         for frame in self {
-            bottom = max(bottom, frame.bottom)
+            bottom = Swift.max(bottom, frame.bottom)
         }
         return bottom
     }

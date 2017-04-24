@@ -8,9 +8,9 @@ import XCTest
 class StackTests: XCTestCase {
     func test_hidden_for_all_hidden_should_return_true() {
         let label1 = UILabel()
-        label1.hidden = true
+        label1.isHidden = true
         let label2 = UILabel()
-        label2.hidden = true
+        label2.isHidden = true
         let stack = MockStack(thingsToStack: [ label1, label2 ])
         
         XCTAssertTrue(stack.hidden)
@@ -18,9 +18,9 @@ class StackTests: XCTestCase {
     
     func test_hidden_for_not_all_hidden_should_return_false() {
         let label1 = UILabel()
-        label1.hidden = true
+        label1.isHidden = true
         let label2 = UILabel()
-        label2.hidden = false
+        label2.isHidden = false
         let stack = MockStack(thingsToStack: [ label1, label2 ])
         
         XCTAssertFalse(stack.hidden)
@@ -28,11 +28,11 @@ class StackTests: XCTestCase {
     
     func test_visibleThingsToStack_should_return_only_non_hidden_stackables() {
         let label1 = UILabel()
-        label1.hidden = true
+        label1.isHidden = true
         let label2 = UILabel()
-        label2.hidden = false
+        label2.isHidden = false
         let label3 = UILabel()
-        label3.hidden = false
+        label3.isHidden = false
         let stack = MockStack(thingsToStack: [ label1, label2, label3 ])
         
         let visibleStackables = stack.visibleThingsToStack()
@@ -45,9 +45,9 @@ class StackTests: XCTestCase {
         let label1 = UILabel()
         let label2 = UILabel()
         let label3 = UILabel()
-        let frame1 = CGRectMake(0, 0, 20, 10)
-        let frame2 = CGRectMake(0, 10, 20, 10)
-        let frame3 = CGRectMake(0, 20, 20, 10)
+        let frame1 = CGRect(x: 0, y: 0, width: 20, height: 10)
+        let frame2 = CGRect(x: 0, y: 10, width: 20, height: 10)
+        let frame3 = CGRect(x: 0, y: 20, width: 20, height: 10)
         let stack = MockStack(thingsToStack: [ label1, MockStack(thingsToStack: [ label2 ]), label3 ])
         
         stack.layoutWithFrames([ frame1, frame2, frame3 ])
@@ -61,9 +61,9 @@ class StackTests: XCTestCase {
         let label1 = UILabel()
         let label2 = UILabel()
         let label3 = UILabel()
-        let frame1 = CGRectMake(0, 0, 20, 10)
-        let frame2 = CGRectMake(0, 10, 20, 10)
-        let frame3 = CGRectMake(0, 20, 20, 10)
+        let frame1 = CGRect(x: 0, y: 0, width: 20, height: 10)
+        let frame2 = CGRect(x: 0, y: 10, width: 20, height: 10)
+        let frame3 = CGRect(x: 0, y: 20, width: 20, height: 10)
         let topMargin: CGFloat = 10
         let leftMargin: CGFloat = 8
         let rightMargin: CGFloat = 8
@@ -81,17 +81,17 @@ class StackTests: XCTestCase {
         let spacing: CGFloat
         let layoutMargins: UIEdgeInsets
         
-        init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsetsZero, thingsToStack: [Stackable]) {
+        init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable]) {
             self.spacing = spacing
             self.layoutMargins = layoutMargins
             self.thingsToStack = thingsToStack
         }        
  
-        func framesForLayout(width: CGFloat, origin: CGPoint) -> [CGRect] {
+        func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
             fatalError("not implemented")
         }
 
-        func framesForLayout(width: CGFloat) -> [CGRect] {
+        func framesForLayout(_ width: CGFloat) -> [CGRect] {
             fatalError("not implemented")
         }
     }

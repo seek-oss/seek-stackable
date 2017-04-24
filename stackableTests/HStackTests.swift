@@ -9,11 +9,11 @@ class HStackTests: XCTestCase {
     func test_framesForLayout_should_return_spaced_frames() {
         let spacing: CGFloat = 2
         let view1 = UIView()
-        let size1 = CGSizeMake(50, 10)
+        let size1 = CGSize(width: 50, height: 10)
         let view2 = UIView()
-        let size2 = CGSizeMake(55, 11)
+        let size2 = CGSize(width: 55, height: 11)
         let view3 = UIView()
-        let size3 = CGSizeMake(60, 12)
+        let size3 = CGSize(width: 60, height: 12)
         
         let stack = HStack(spacing: spacing, thingsToStack: [
             view1.stackSize(size1),
@@ -48,9 +48,9 @@ class HStackTests: XCTestCase {
 
         let spacing: CGFloat = 2
         let view1 = UIView()
-        let size1 = CGSizeMake(50, 10)
+        let size1 = CGSize(width: 50, height: 10)
         let view2 = UIView()
-        let size2 = CGSizeMake(55, 11)
+        let size2 = CGSize(width: 55, height: 11)
         
         let stack = HStack(spacing: spacing, layoutMargins: UIEdgeInsetsMake(topMargin, leftMargin, bottomMargin, rightMargin), thingsToStack: [
             view1.stackSize(size1),
@@ -75,11 +75,11 @@ class HStackTests: XCTestCase {
         let spacing: CGFloat = 2
         let spacing2: CGFloat = 1
         let view1 = UIView()
-        let size1 = CGSizeMake(50, 10)
+        let size1 = CGSize(width: 50, height: 10)
         let view2 = UIView()
-        let size2 = CGSizeMake(55, 11)
+        let size2 = CGSize(width: 55, height: 11)
         let view3 = UIView()
-        let size3 = CGSizeMake(60, 12)
+        let size3 = CGSize(width: 60, height: 12)
         
         let stack = HStack(spacing: spacing, thingsToStack: [
             VStack(spacing: spacing2, thingsToStack: [

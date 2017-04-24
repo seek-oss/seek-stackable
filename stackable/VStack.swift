@@ -3,21 +3,21 @@
 
 import UIKit
 
-public class VStack: Stack  {
-    public let thingsToStack: [Stackable]
-    public let spacing: CGFloat
-    public let layoutMargins: UIEdgeInsets
+open class VStack: Stack  {
+    open let thingsToStack: [Stackable]
+    open let spacing: CGFloat
+    open let layoutMargins: UIEdgeInsets
     
-    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsetsZero, thingsToStack: [Stackable]) {
+    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable]) {
         self.spacing = spacing
         self.layoutMargins = layoutMargins
         self.thingsToStack = thingsToStack
     }
     
-    public func framesForLayout(width: CGFloat, origin: CGPoint) -> [CGRect] {
+    open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         var origin = origin
         var width = width
-        if layoutMargins != UIEdgeInsetsZero {
+        if layoutMargins != UIEdgeInsets.zero {
             origin.x = layoutMargins.left
             origin.y = layoutMargins.top
             width -= (layoutMargins.left + layoutMargins.right)
@@ -32,11 +32,11 @@ public class VStack: Stack  {
             let stackable = thingsToStack[i]
             if let stack = stackable as? Stack {
                 let innerFrames = stack.framesForLayout(width, origin: CGPoint(x: origin.x, y: y))
-                frames.appendContentsOf(innerFrames)
+                frames.append(contentsOf: innerFrames)
                 y = frames.bottom
             } else if let item = stackable as? StackableItem {
                 let height = item.heightForWidth(width)
-                let frame = CGRectMake(origin.x, y, width, height)
+                let frame = CGRect(x: origin.x, y: y, width: width, height: height)
                 frames.append(frame)
                 y += height
             }
