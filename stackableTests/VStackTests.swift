@@ -16,9 +16,9 @@ class VStackTests: XCTestCase {
         let height3: CGFloat = 12
         
         let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.stackSize(CGSizeMake(100, height1)),
-            view2.stackSize(CGSizeMake(100, height2)),
-            view3.stackSize(CGSizeMake(100, height3))
+            view1.stackSize(CGSize(width: 100, height: height1)),
+            view2.stackSize(CGSize(width: 100, height: height2)),
+            view3.stackSize(CGSize(width: 100, height: height3))
             ])
         
         let frames = stack.framesForLayout(200)
@@ -53,8 +53,8 @@ class VStackTests: XCTestCase {
         let height2: CGFloat = 11
         
         let stack = VStack(spacing: spacing, layoutMargins: UIEdgeInsetsMake(topMargin, leftMargin, bottomMargin, rightMargin), thingsToStack: [
-            view1.stackSize(CGSizeMake(100, height1)),
-            view2.stackSize(CGSizeMake(100, height2))
+            view1.stackSize(CGSize(width: 100, height: height1)),
+            view2.stackSize(CGSize(width: 100, height: height2))
             ])
         
         let frames = stack.framesForLayout(200)
@@ -82,10 +82,10 @@ class VStackTests: XCTestCase {
         let height3: CGFloat = 12
         
         let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.stackSize(CGSizeMake(100, height1)),
+            view1.stackSize(CGSize(width: 100, height: height1)),
             VStack(spacing: spacing2, thingsToStack: [
-                view2.stackSize(CGSizeMake(100, height2)),
-                view3.stackSize(CGSizeMake(100, height3))
+                view2.stackSize(CGSize(width: 100, height: height2)),
+                view3.stackSize(CGSize(width: 100, height: height3))
                 ])
             ])
         
@@ -114,12 +114,12 @@ class VStackTests: XCTestCase {
         let height1: CGFloat = 10
         let spacing2: CGFloat = 10
         let view2 = UIView()
-        let size2 = CGSizeMake(50, 11)
+        let size2 = CGSize(width: 50, height: 11)
         let view3 = UIView()
-        let size3 = CGSizeMake(60, 12)
+        let size3 = CGSize(width: 60, height: 12)
         
         let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.stackSize(CGSizeMake(100, height1)),
+            view1.stackSize(CGSize(width: 100, height: height1)),
             HStack(spacing: spacing2, thingsToStack: [
                 view2.stackSize(size2),
                 view3.stackSize(size3)

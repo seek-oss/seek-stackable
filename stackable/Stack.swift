@@ -7,7 +7,7 @@ public protocol Stack: class, Stackable {
     var thingsToStack: [Stackable] { get }
     var spacing: CGFloat { get }
     var layoutMargins: UIEdgeInsets { get }
-    func framesForLayout(width: CGFloat, origin: CGPoint) -> [CGRect]
+    func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect]
 }
 
 extension Stack {
@@ -19,14 +19,14 @@ extension Stack {
         return self.thingsToStack.filter({ !$0.hidden })
     }
 
-    private func viewsToLayout() -> [UIView] {
+    fileprivate func viewsToLayout() -> [UIView] {
         var views: [UIView] = []
         let thingsToStack = self.visibleThingsToStack()
         for i in 0..<thingsToStack.count {
             let stackable = thingsToStack[i]
             if let stack = stackable as? Stack {
                 let innerViews = stack.viewsToLayout()
-                views.appendContentsOf(innerViews)
+                views.append(contentsOf: innerViews)
             } else {
                 if let view = stackable as? UIView {
                     views.append(view)
@@ -38,7 +38,7 @@ extension Stack {
         return views
     }
     
-    public func layoutWithFrames(frames: [CGRect]) {
+    public func layoutWithFrames(_ frames: [CGRect]) {
         let views = self.viewsToLayout()
 
         assert(frames.count == views.count, "layoutWithFrames could not be performed because of frame(\(frames.count)) / view(\(views.count)) count mismatch")
@@ -50,11 +50,11 @@ extension Stack {
         }
     }
 
-    public func heightForFrames(frames: [CGRect]) -> CGFloat {
+    public func heightForFrames(_ frames: [CGRect]) -> CGFloat {
         return frames.bottom + self.layoutMargins.bottom
     }
 
-    public func framesForLayout(width: CGFloat) -> [CGRect] {
-        return self.framesForLayout(width, origin: CGPointZero)
+    public func framesForLayout(_ width: CGFloat) -> [CGRect] {
+        return self.framesForLayout(width, origin: CGPoint.zero)
     }
 }

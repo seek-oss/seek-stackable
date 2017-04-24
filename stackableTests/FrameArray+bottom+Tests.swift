@@ -8,9 +8,9 @@ import XCTest
 class FrameArray_bottom_Tests: XCTestCase {
     func test_bottom_should_return_bottom_of_lowest_frame() {
         let frames = [
-            CGRectMake(0, 10, 0, 50),
-            CGRectMake(0, 10, 0, 80),
-            CGRectMake(0, 10, 0, 20)
+            CGRect(x: 0, y: 10, width: 0, height: 50),
+            CGRect(x: 0, y: 10, width: 0, height: 80),
+            CGRect(x: 0, y: 10, width: 0, height: 20)
         ]
         
         XCTAssertEqual(frames.bottom, frames[1].origin.y + frames[1].height)
