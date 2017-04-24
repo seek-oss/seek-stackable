@@ -199,11 +199,11 @@
 				TargetAttributes = {
 					9D38FED71D73A077001CB50F = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0830;
 					};
 					9D38FEE11D73A078001CB50F = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
