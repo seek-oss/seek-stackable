@@ -77,6 +77,7 @@ class StackTests: XCTestCase {
     }
 
     class MockStack: Stack {
+        var width: CGFloat?
         let thingsToStack: [Stackable]
         let spacing: CGFloat
         let layoutMargins: UIEdgeInsets
