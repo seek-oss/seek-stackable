@@ -7,19 +7,21 @@ open class VStack: Stack  {
     open let thingsToStack: [Stackable]
     open let spacing: CGFloat
     open let layoutMargins: UIEdgeInsets
+    open let width: CGFloat?
     
-    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable]) {
+    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable], width: CGFloat? = nil) {
         self.spacing = spacing
         self.layoutMargins = layoutMargins
         self.thingsToStack = thingsToStack
+        self.width = width
     }
     
     open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         var origin = origin
         var width = width
         if layoutMargins != UIEdgeInsets.zero {
-            origin.x = layoutMargins.left
-            origin.y = layoutMargins.top
+            origin.x += layoutMargins.left
+            origin.y += layoutMargins.top
             width -= (layoutMargins.left + layoutMargins.right)
         }
         let thingsToStack = self.visibleThingsToStack()
