@@ -1,8 +1,13 @@
 # seek-stackable
 iOS framework for laying out nested views vertically and horizontally.
 
-# History
+- [History](#history)
+- [Why use stackable?](#why-use-stackable)
+- [What it's not](#what-its-not)
+- [Current Limitations](#current-limitations)
+- [Example](#example)
 
+# History
 We wanted to be able to layout variable height UITableViewCell's without paying a penalty in scrolling smoothness and without having to maintain frame layout code.
 
 # Why use stackable?
@@ -22,40 +27,40 @@ We wanted to be able to layout variable height UITableViewCell's without paying 
 - stackable is not based on AutoLayout
   - AutoLayout is powerful but difficult to tune for performance
 
-## Current Limitations
+# Current Limitations
 - integration has only been verified with UILabel and UIImageView
 - no alignment options
 - no distribution options
 
-## example
+# Example
 
-```
-  let descriptionLabel = UILabel()
-  let attribute1 = UILabel()
-  let attribute2 = UILabel()
-  let attribute3 = UILabel()
-  let logoImageView = UIImageView()
-  
-  let stack = VStack(spacing: 2, thingsToStack: [
-    HStack(spacing: 10, thingsToStack: [
-      VStack(spacing: 1, thingsToStack: [
-        attribute1,
-        attribute2,
-        attribute3
-      ]),
-      logoImageView.stackSize(100, 100)
+```swift
+let descriptionLabel = UILabel()
+let attribute1 = UILabel()
+let attribute2 = UILabel()
+let attribute3 = UILabel()
+let logoImageView = UIImageView()
+
+let stack = VStack(spacing: 2, thingsToStack: [
+  HStack(spacing: 10, thingsToStack: [
+    VStack(spacing: 1, thingsToStack: [
+      attribute1,
+      attribute2,
+      attribute3
     ]),
-    descriptionLabel
-  ])
-  
-  let width = self.frame.size.width
-  
-  // give me the frames
-  let stackedFrames = stack.framesForLayout(width)
-  
-  // how tall is the stack?
-  let height = stack.heightForFrames(stackedFrames)
-  
-  // lay the frames out
-  stack.layoutWithFrames(stackedFrames)
+    logoImageView.stackSize(100, 100)
+  ]),
+  descriptionLabel
+])
+
+let width = self.frame.size.width
+
+// give me the frames
+let stackedFrames = stack.framesForLayout(width)
+
+// how tall is the stack?
+let height = stack.heightForFrames(stackedFrames)
+
+// lay the frames out
+stack.layoutWithFrames(stackedFrames)
 ```
