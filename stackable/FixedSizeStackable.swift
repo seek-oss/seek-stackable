@@ -16,7 +16,7 @@ open class FixedSizeStackable: StackableItem {
         return self.size.height
     }
     
-    open var hidden: Bool {
+    open var isHidden: Bool {
         return view.isHidden
     }
 }

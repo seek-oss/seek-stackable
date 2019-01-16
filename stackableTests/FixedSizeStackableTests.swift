@@ -37,9 +37,9 @@ class FixedSizeStackableTests: XCTestCase {
         let stackable = FixedSizeStackable(view: view, size: CGSize(width: 100, height: 50))
         
         view.isHidden = false
-        XCTAssertFalse(stackable.hidden)
+        XCTAssertFalse(stackable.isHidden)
         view.isHidden = true
-        XCTAssertTrue(stackable.hidden)
+        XCTAssertTrue(stackable.isHidden)
     }
 }
 

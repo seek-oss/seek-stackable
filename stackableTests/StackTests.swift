@@ -13,7 +13,7 @@ class StackTests: XCTestCase {
         label2.isHidden = true
         let stack = MockStack(thingsToStack: [ label1, label2 ])
         
-        XCTAssertTrue(stack.hidden)
+        XCTAssertTrue(stack.isHidden)
     }
     
     func test_hidden_for_not_all_hidden_should_return_false() {
@@ -23,7 +23,7 @@ class StackTests: XCTestCase {
         label2.isHidden = false
         let stack = MockStack(thingsToStack: [ label1, label2 ])
         
-        XCTAssertFalse(stack.hidden)
+        XCTAssertFalse(stack.isHidden)
     }
     
     func test_visibleThingsToStack_should_return_only_non_hidden_stackables() {
