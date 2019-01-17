@@ -12,4 +12,5 @@ Pod::Spec.new do |s|
   s.source_files  = 'stackable/**/*.swift'
   s.frameworks   = 'UIKit'
   s.requires_arc = true
+  s.swift_version = '4.2'
 end
