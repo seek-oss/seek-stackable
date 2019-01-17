@@ -4,10 +4,10 @@
 import UIKit
 
 open class HStack: Stack {
-    open let thingsToStack: [Stackable]
-    open let spacing: CGFloat
-    open let layoutMargins: UIEdgeInsets
-    open let width: CGFloat?
+    public let thingsToStack: [Stackable]
+    public let spacing: CGFloat
+    public let layoutMargins: UIEdgeInsets
+    public let width: CGFloat?
     
     public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable], width: CGFloat? = nil) {
         self.spacing = spacing
