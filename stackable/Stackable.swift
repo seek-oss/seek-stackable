@@ -4,5 +4,5 @@
 import UIKit
 
 public protocol Stackable {
-    var hidden: Bool { get }
+    var isHidden: Bool { get }
 }

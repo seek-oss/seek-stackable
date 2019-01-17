@@ -4,5 +4,5 @@
 import UIKit
 
 public protocol StackableItem: Stackable {
-    func heightForWidth(_ width: CGFloat) -> CGFloat    
+    func heightForWidth(_ width: CGFloat) -> CGFloat
 }

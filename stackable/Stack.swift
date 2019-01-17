@@ -12,12 +12,12 @@ public protocol Stack: class, Stackable {
 }
 
 extension Stack {
-    public var hidden: Bool {
-        return (self.thingsToStack.filter({ !$0.hidden }).count == 0)
+    public var isHidden: Bool {
+        return (self.thingsToStack.filter({ !$0.isHidden }).count == 0)
     }
     
     func visibleThingsToStack() -> [Stackable] {
-        return self.thingsToStack.filter({ !$0.hidden })
+        return self.thingsToStack.filter({ !$0.isHidden })
     }
     
     fileprivate func viewsToLayout() -> [UIView] {
