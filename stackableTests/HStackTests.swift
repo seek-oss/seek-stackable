@@ -52,7 +52,7 @@ class HStackTests: XCTestCase {
         let view2 = UIView()
         let size2 = CGSize(width: 55, height: 11)
         
-        let stack = HStack(spacing: spacing, layoutMargins: UIEdgeInsets.init(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [
+        let stack = HStack(spacing: spacing, layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [
             view1.stackSize(size1),
             view2.stackSize(size2)
             ])

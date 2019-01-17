@@ -7,7 +7,7 @@ import XCTest
 
 class UILabel_heightForWidth_Tests: XCTestCase {
     func test_heightForWidth_should_return_expected_result() {
-        let font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium)
+        let font = UIFont.systemFont(ofSize: 12, weight: .medium)
         let text = "some text"
         let width: CGFloat = 100
         let label = UILabel()

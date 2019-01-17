@@ -69,7 +69,7 @@ class StackTests: XCTestCase {
         let rightMargin: CGFloat = 8
         let bottomMargin: CGFloat = 10
         
-        let stack = MockStack(layoutMargins: UIEdgeInsets.init(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [ label1, MockStack(thingsToStack: [ label2 ]), label3 ])
+        let stack = MockStack(layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [ label1, MockStack(thingsToStack: [ label2 ]), label3 ])
         
         let frames = [ frame1, frame2, frame3 ]
         let height = stack.heightForFrames(frames)

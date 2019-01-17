@@ -52,7 +52,7 @@ class VStackTests: XCTestCase {
         let view2 = UIView()
         let height2: CGFloat = 11
         
-        let stack = VStack(spacing: spacing, layoutMargins: UIEdgeInsets.init(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [
+        let stack = VStack(spacing: spacing, layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [
             view1.stackSize(CGSize(width: 100, height: height1)),
             view2.stackSize(CGSize(width: 100, height: height2))
             ])
