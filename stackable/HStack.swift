@@ -16,6 +16,15 @@ open class HStack: Stack {
         self.width = width
     }
     
+    public convenience init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, width: CGFloat? = nil, thingsToStack: () -> [Stackable]) {
+        self.init(
+            spacing: spacing,
+            layoutMargins: layoutMargins,
+            thingsToStack: thingsToStack(),
+            width: width
+        )
+    }
+    
     open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         // TODO: add adjustments for layoutMargins (not currently needed so okay to defer)
         
