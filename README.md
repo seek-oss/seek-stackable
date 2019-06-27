@@ -41,17 +41,17 @@ let attribute2 = UILabel()
 let attribute3 = UILabel()
 let logoImageView = UIImageView()
 
-let stack = VStack(spacing: 2, thingsToStack: [
-  HStack(spacing: 10, thingsToStack: [
-    VStack(spacing: 1, thingsToStack: [
+let stack = VStack(spacing: 2) {[
+  HStack(spacing: 10) {[
+    VStack(spacing: 1) {[
       attribute1,
       attribute2,
       attribute3
-    ]),
+    ]},
     logoImageView.stackSize(100, 100)
-  ]),
+  ]},
   descriptionLabel
-])
+]}
 
 let width = self.frame.size.width
 

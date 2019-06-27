@@ -144,4 +144,29 @@ class VStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.width, size3.width)
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
+    
+    func test_convenience_init_with_thingsToStack_closure() {
+        let layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let spacing: CGFloat = 2
+        let view1 = UILabel()
+        let view2 = UILabel()
+        
+        let stack = VStack(
+            spacing: spacing,
+            layoutMargins: layoutMargins,
+            width: 200
+        ) {[
+            view1,
+            view2
+        ]}
+        
+        XCTAssertEqual(stack.spacing, 2)
+        XCTAssertEqual(stack.layoutMargins, layoutMargins)
+        XCTAssertEqual(stack.width, 200)
+        XCTAssertEqual(stack.thingsToStack.count, 2)
+        XCTAssertEqual(stack.thingsToStack as? [UILabel], [
+            view1,
+            view2
+        ])
+    }
 }
