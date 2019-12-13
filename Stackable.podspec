@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   
   s.ios.deployment_target = '8.0'
   s.source       = { :git => 'https://github.com/seek-oss/seek-stackable.git', :tag => s.version }
-  s.source_files  = 'stackable/**/*.swift'
+  s.source_files  = 'Sources/**/*.swift'
   s.frameworks   = 'UIKit'
   s.requires_arc = true
   s.swift_version = '4.2'

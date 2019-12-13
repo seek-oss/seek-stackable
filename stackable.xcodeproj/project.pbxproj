@@ -87,8 +87,8 @@
 		9D38FECE1D73A077001CB50F = {
 			isa = PBXGroup;
 			children = (
-				9D38FEDA1D73A077001CB50F /* stackable */,
-				9D38FEE61D73A078001CB50F /* stackableTests */,
+				9D38FEDA1D73A077001CB50F /* Sources */,
+				9D38FEE61D73A078001CB50F /* Tests */,
 				9D38FED91D73A077001CB50F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,7 +102,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9D38FEDA1D73A077001CB50F /* stackable */ = {
+		9D38FEDA1D73A077001CB50F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				9D1831C91D73EDE100A53419 /* CGRectProtocol.swift */,
@@ -118,10 +118,10 @@
 				9D38FEDB1D73A077001CB50F /* stackable.h */,
 				9D38FEDD1D73A077001CB50F /* Info.plist */,
 			);
-			path = stackable;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		9D38FEE61D73A078001CB50F /* stackableTests */ = {
+		9D38FEE61D73A078001CB50F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9D5447211D73A48000ED0AE7 /* HStackTests.swift */,
@@ -134,7 +134,7 @@
 				9D5447281D73A48000ED0AE7 /* StackTests.swift */,
 				9D38FEE91D73A078001CB50F /* Info.plist */,
 			);
-			path = stackableTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,11 +207,12 @@
 					};
 				};
 			};
-			buildConfigurationList = 9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "stackable" */;
+			buildConfigurationList = 9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "Stackable" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 9D38FECE1D73A077001CB50F;
@@ -445,7 +446,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "stackable" */ = {
+		9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "Stackable" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9D38FEEA1D73A078001CB50F /* Debug */,
