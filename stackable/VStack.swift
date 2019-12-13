@@ -33,26 +33,38 @@ open class VStack: Stack  {
             origin.y += layoutMargins.top
             width -= (layoutMargins.left + layoutMargins.right)
         }
-        let thingsToStack = self.visibleThingsToStack()
         var frames: [CGRect] = []
         var y: CGFloat = origin.y
-        for i in 0..<thingsToStack.count {
-            if i > 0 {
+        self.visibleThingsToStack()
+            .forEach { stackable in
+                if let stack = stackable as? Stack {
+                    let innerFrames = stack.framesForLayout(width, origin: CGPoint(x: origin.x, y: y))
+                    frames.append(contentsOf: innerFrames)
+                    y = frames.bottom
+                } else if let item = stackable as? StackableItem {
+                    let height = item.heightForWidth(width)
+                    let frame = CGRect(x: origin.x, y: y, width: width, height: height)
+                    frames.append(frame)
+                    y += height
+                }
                 y += self.spacing
             }
-            let stackable = thingsToStack[i]
-            if let stack = stackable as? Stack {
-                let innerFrames = stack.framesForLayout(width, origin: CGPoint(x: origin.x, y: y))
-                frames.append(contentsOf: innerFrames)
-                y = frames.bottom
-            } else if let item = stackable as? StackableItem {
-                let height = item.heightForWidth(width)
-                let frame = CGRect(x: origin.x, y: y, width: width, height: height)
-                frames.append(frame)
-                y += height
-            }
-        }
         return frames
     }
+    
+    public var intrinsicContentSize: CGSize {
+        let items = visibleThingsToStack()
+        
+        guard !items.isEmpty else { return .zero }
+        
+        // width
+        let intrinsicWidth = items.reduce(0, { max($0, $1.intrinsicContentSize.width) }) + layoutMargins.horizontalInsets
+        
+        // height
+        let itemsHeight = items.reduce(0, { $0 + $1.intrinsicContentSize.height })
+        let verticalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
+        let intrinsicHeight = itemsHeight + verticalSpacing + layoutMargins.verticalInsets
+        
+        return CGSize(width: intrinsicWidth, height: intrinsicHeight)
+    }
 }
-
