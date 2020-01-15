@@ -32,7 +32,7 @@ open class VStack: Stack  {
             origin.x += layoutMargins.left
             origin.y += layoutMargins.top
             width -= (layoutMargins.left + layoutMargins.right)
-        }
+        } 
         var frames: [CGRect] = []
         var y: CGFloat = origin.y
         self.visibleThingsToStack()
@@ -42,10 +42,11 @@ open class VStack: Stack  {
                     frames.append(contentsOf: innerFrames)
                     y = frames.bottom
                 } else if let item = stackable as? StackableItem {
-                    let height = item.heightForWidth(width)
-                    let frame = CGRect(x: origin.x, y: y, width: width, height: height)
+                    let itemHeight = item.heightForWidth(width)
+                    let itemWidth = min(width, item.intrinsicContentSize.width)
+                    let frame = CGRect(x: origin.x, y: y, width: itemWidth, height: itemHeight)
                     frames.append(frame)
-                    y += height
+                    y += itemHeight
                 }
                 y += self.spacing
             }
@@ -61,9 +62,9 @@ open class VStack: Stack  {
         let intrinsicWidth = items.reduce(0, { max($0, $1.intrinsicContentSize.width) }) + layoutMargins.horizontalInsets
         
         // height
-        let itemsHeight = items.reduce(0, { $0 + $1.intrinsicContentSize.height })
-        let verticalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
-        let intrinsicHeight = itemsHeight + verticalSpacing + layoutMargins.verticalInsets
+        let totalHeightOfItems = items.reduce(0, { $0 + $1.intrinsicContentSize.height })
+        let totalVerticalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
+        let intrinsicHeight = totalHeightOfItems + totalVerticalSpacing + layoutMargins.verticalInsets
         
         return CGSize(width: intrinsicWidth, height: intrinsicHeight)
     }

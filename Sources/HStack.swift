@@ -70,9 +70,9 @@ open class HStack: Stack {
         guard !items.isEmpty else { return .zero }
         
         // width
-        let itemsWidth = items.reduce(0, { $0 + $1.intrinsicContentSize.width })
-        let horizontalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
-        let intrinsicWidth = itemsWidth + horizontalSpacing
+        let totalWidthOfItems = items.reduce(0, { $0 + $1.intrinsicContentSize.width })
+        let totalHorizontalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
+        let intrinsicWidth = totalWidthOfItems + totalHorizontalSpacing
         
         // height
         let intrinsicHeight = items.reduce(0, { max($0, $1.intrinsicContentSize.height) })
