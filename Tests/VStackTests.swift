@@ -16,27 +16,27 @@ class VStackTests: XCTestCase {
         let height3: CGFloat = 12
         
         let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.stackSize(CGSize(width: 100, height: height1)),
-            view2.stackSize(CGSize(width: 100, height: height2)),
-            view3.stackSize(CGSize(width: 100, height: height3))
-            ])
+            view1.fixed(width: 100, height: height1),
+            view2.fixed(width: 100, height: height2),
+            view3.fixed(width: 100, height: height3)
+        ])
         
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 3)
         // view1
         XCTAssertEqual(frames[0].origin.x, 0)
         XCTAssertEqual(frames[0].origin.y, 0)
-        XCTAssertEqual(frames[0].size.width, 200) /* TODO: VStack is not currently respecting FixedSizeStackable width */
+        XCTAssertEqual(frames[0].size.width, 100)
         XCTAssertEqual(frames[0].size.height, height1)
         // view2
         XCTAssertEqual(frames[1].origin.x, 0)
         XCTAssertEqual(frames[1].origin.y, height1 + spacing)
-        XCTAssertEqual(frames[1].size.width, 200)
+        XCTAssertEqual(frames[1].size.width, 100)
         XCTAssertEqual(frames[1].size.height, height2)
         // view3
         XCTAssertEqual(frames[2].origin.x, 0)
         XCTAssertEqual(frames[2].origin.y, height1 + spacing + height2 + spacing)
-        XCTAssertEqual(frames[2].size.width, 200)
+        XCTAssertEqual(frames[2].size.width, 100)
         XCTAssertEqual(frames[2].size.height, height3)
     }
 
@@ -53,8 +53,8 @@ class VStackTests: XCTestCase {
         let height2: CGFloat = 11
         
         let stack = VStack(spacing: spacing, layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [
-            view1.stackSize(CGSize(width: 100, height: height1)),
-            view2.stackSize(CGSize(width: 100, height: height2))
+            view1.fixed(width: 100, height: height1),
+            view2.fixed(width: 100, height: height2)
             ])
         
         let frames = stack.framesForLayout(200)
@@ -62,12 +62,12 @@ class VStackTests: XCTestCase {
         // view1
         XCTAssertEqual(frames[0].origin.x, leftMargin)
         XCTAssertEqual(frames[0].origin.y, topMargin)
-        XCTAssertEqual(frames[0].size.width, 200 - leftMargin - rightMargin) /* TODO: VStack is not currently respecting FixedSizeStackable width */
+        XCTAssertEqual(frames[0].size.width, 100)
         XCTAssertEqual(frames[0].size.height, height1)
         // view2
         XCTAssertEqual(frames[1].origin.x, leftMargin)
         XCTAssertEqual(frames[1].origin.y, topMargin + height1 + spacing)
-        XCTAssertEqual(frames[1].size.width, 200 - leftMargin - rightMargin)
+        XCTAssertEqual(frames[1].size.width, 100)
         XCTAssertEqual(frames[1].size.height, height2)
     }
 
@@ -82,10 +82,10 @@ class VStackTests: XCTestCase {
         let height3: CGFloat = 12
         
         let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.stackSize(CGSize(width: 100, height: height1)),
+            view1.fixed(width: 100, height: height1),
             VStack(spacing: spacing2, thingsToStack: [
-                view2.stackSize(CGSize(width: 100, height: height2)),
-                view3.stackSize(CGSize(width: 100, height: height3))
+                view2.fixed(width: 100, height: height2),
+                view3.fixed(width: 100, height: height3)
                 ])
             ])
         
@@ -94,17 +94,17 @@ class VStackTests: XCTestCase {
         // view1
         XCTAssertEqual(frames[0].origin.x, 0)
         XCTAssertEqual(frames[0].origin.y, 0)
-        XCTAssertEqual(frames[0].size.width, 200) /* TODO: VStack is not currently respecting FixedSizeStackable width */
+        XCTAssertEqual(frames[0].size.width, 100)
         XCTAssertEqual(frames[0].size.height, height1)
         // view2
         XCTAssertEqual(frames[1].origin.x, 0)
         XCTAssertEqual(frames[1].origin.y, height1 + spacing)
-        XCTAssertEqual(frames[1].size.width, 200)
+        XCTAssertEqual(frames[1].size.width, 100)
         XCTAssertEqual(frames[1].size.height, height2)
         // view3
         XCTAssertEqual(frames[2].origin.x, 0)
         XCTAssertEqual(frames[2].origin.y, height1 + spacing + height2 + spacing2)
-        XCTAssertEqual(frames[2].size.width, 200)
+        XCTAssertEqual(frames[2].size.width, 100)
         XCTAssertEqual(frames[2].size.height, height3)
     }
 
@@ -119,10 +119,10 @@ class VStackTests: XCTestCase {
         let size3 = CGSize(width: 60, height: 12)
         
         let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.stackSize(CGSize(width: 100, height: height1)),
+            view1.fixed(width: 100, height: height1),
             HStack(spacing: spacing2, thingsToStack: [
-                view2.stackSize(size2),
-                view3.stackSize(size3)
+                view2.fixed(size: size2),
+                view3.fixed(size: size3)
                 ])
             ])
         
@@ -131,7 +131,7 @@ class VStackTests: XCTestCase {
         // view1
         XCTAssertEqual(frames[0].origin.x, 0)
         XCTAssertEqual(frames[0].origin.y, 0)
-        XCTAssertEqual(frames[0].size.width, 200) /* TODO: VStack is not currently respecting FixedSizeStackable width */
+        XCTAssertEqual(frames[0].size.width, 100)
         XCTAssertEqual(frames[0].size.height, height1)
         // view2
         XCTAssertEqual(frames[1].origin.x, 0)

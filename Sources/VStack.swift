@@ -32,7 +32,7 @@ open class VStack: Stack  {
             origin.x += layoutMargins.left
             origin.y += layoutMargins.top
             width -= (layoutMargins.left + layoutMargins.right)
-        } 
+        }
         var frames: [CGRect] = []
         var y: CGFloat = origin.y
         self.visibleThingsToStack()

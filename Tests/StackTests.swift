@@ -95,5 +95,9 @@ class StackTests: XCTestCase {
         func framesForLayout(_ width: CGFloat) -> [CGRect] {
             fatalError("not implemented")
         }
+        
+        var intrinsicContentSize: CGSize {
+            fatalError("not implemented")
+        }
     }
 }

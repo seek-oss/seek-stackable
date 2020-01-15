@@ -10,7 +10,7 @@ class UIView_stackSize_Tests: XCTestCase {
         let size = CGSize(width: 100, height: 50)
         
         let view = UIView()
-        let result = view.stackSize(size)
+        let result = view.fixed(size: size)
         
         XCTAssertEqual(result.size, size)
         XCTAssertTrue(result.view === view)
