@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9D1831D31D73EDE100A53419 /* CGRectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831C91D73EDE100A53419 /* CGRectProtocol.swift */; };
 		9D1831D41D73EDE100A53419 /* FixedSizeStackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CA1D73EDE100A53419 /* FixedSizeStackable.swift */; };
-		9D1831D51D73EDE100A53419 /* FrameArray+bottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CB1D73EDE100A53419 /* FrameArray+bottom.swift */; };
+		9D1831D51D73EDE100A53419 /* FrameArray+maxY.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CB1D73EDE100A53419 /* FrameArray+maxY.swift */; };
 		9D1831D61D73EDE100A53419 /* HStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CC1D73EDE100A53419 /* HStack.swift */; };
 		9D1831D71D73EDE100A53419 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CD1D73EDE100A53419 /* Stack.swift */; };
 		9D1831D81D73EDE100A53419 /* Stackable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1831CE1D73EDE100A53419 /* Stackable.swift */; };
@@ -23,10 +23,11 @@
 		9D54472A1D73A48000ED0AE7 /* VStackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447221D73A48000ED0AE7 /* VStackTests.swift */; };
 		9D54472B1D73A48000ED0AE7 /* UILabel+heightForWidth+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447231D73A48000ED0AE7 /* UILabel+heightForWidth+Tests.swift */; };
 		9D54472C1D73A48000ED0AE7 /* UIView+stackSize+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447241D73A48000ED0AE7 /* UIView+stackSize+Tests.swift */; };
-		9D54472D1D73A48000ED0AE7 /* FrameArray+bottom+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447251D73A48000ED0AE7 /* FrameArray+bottom+Tests.swift */; };
-		9D54472E1D73A48000ED0AE7 /* CGRectProtocol+bottom+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447261D73A48000ED0AE7 /* CGRectProtocol+bottom+Tests.swift */; };
+		9D54472D1D73A48000ED0AE7 /* FrameArray+maxY+Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447251D73A48000ED0AE7 /* FrameArray+maxY+Tests.swift */; };
 		9D54472F1D73A48000ED0AE7 /* FixedSizeStackableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447271D73A48000ED0AE7 /* FixedSizeStackableTests.swift */; };
 		9D5447301D73A48000ED0AE7 /* StackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5447281D73A48000ED0AE7 /* StackTests.swift */; };
+		EAC9EA7123CFCCC700AD870C /* UIEdgeInsets+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC9EA7023CFCCC700AD870C /* UIEdgeInsets+Utils.swift */; };
+		EAC9EA7323CFD48500AD870C /* UIEdgeInsets+UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC9EA7223CFD48500AD870C /* UIEdgeInsets+UtilsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +43,7 @@
 /* Begin PBXFileReference section */
 		9D1831C91D73EDE100A53419 /* CGRectProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectProtocol.swift; sourceTree = "<group>"; };
 		9D1831CA1D73EDE100A53419 /* FixedSizeStackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedSizeStackable.swift; sourceTree = "<group>"; };
-		9D1831CB1D73EDE100A53419 /* FrameArray+bottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FrameArray+bottom.swift"; sourceTree = "<group>"; };
+		9D1831CB1D73EDE100A53419 /* FrameArray+maxY.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FrameArray+maxY.swift"; sourceTree = "<group>"; };
 		9D1831CC1D73EDE100A53419 /* HStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HStack.swift; sourceTree = "<group>"; };
 		9D1831CD1D73EDE100A53419 /* Stack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
 		9D1831CE1D73EDE100A53419 /* Stackable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stackable.swift; sourceTree = "<group>"; };
@@ -59,10 +60,11 @@
 		9D5447221D73A48000ED0AE7 /* VStackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VStackTests.swift; sourceTree = "<group>"; };
 		9D5447231D73A48000ED0AE7 /* UILabel+heightForWidth+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+heightForWidth+Tests.swift"; sourceTree = "<group>"; };
 		9D5447241D73A48000ED0AE7 /* UIView+stackSize+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+stackSize+Tests.swift"; sourceTree = "<group>"; };
-		9D5447251D73A48000ED0AE7 /* FrameArray+bottom+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FrameArray+bottom+Tests.swift"; sourceTree = "<group>"; };
-		9D5447261D73A48000ED0AE7 /* CGRectProtocol+bottom+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRectProtocol+bottom+Tests.swift"; sourceTree = "<group>"; };
+		9D5447251D73A48000ED0AE7 /* FrameArray+maxY+Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FrameArray+maxY+Tests.swift"; sourceTree = "<group>"; };
 		9D5447271D73A48000ED0AE7 /* FixedSizeStackableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FixedSizeStackableTests.swift; sourceTree = "<group>"; };
 		9D5447281D73A48000ED0AE7 /* StackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackTests.swift; sourceTree = "<group>"; };
+		EAC9EA7023CFCCC700AD870C /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
+		EAC9EA7223CFD48500AD870C /* UIEdgeInsets+UtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+UtilsTests.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +89,8 @@
 		9D38FECE1D73A077001CB50F = {
 			isa = PBXGroup;
 			children = (
-				9D38FEDA1D73A077001CB50F /* stackable */,
-				9D38FEE61D73A078001CB50F /* stackableTests */,
+				9D38FEDA1D73A077001CB50F /* Sources */,
+				9D38FEE61D73A078001CB50F /* Tests */,
 				9D38FED91D73A077001CB50F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,39 +104,40 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9D38FEDA1D73A077001CB50F /* stackable */ = {
+		9D38FEDA1D73A077001CB50F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				9D1831C91D73EDE100A53419 /* CGRectProtocol.swift */,
 				9D1831CA1D73EDE100A53419 /* FixedSizeStackable.swift */,
-				9D1831CB1D73EDE100A53419 /* FrameArray+bottom.swift */,
+				9D1831CB1D73EDE100A53419 /* FrameArray+maxY.swift */,
 				9D1831CC1D73EDE100A53419 /* HStack.swift */,
 				9D1831CD1D73EDE100A53419 /* Stack.swift */,
 				9D1831CE1D73EDE100A53419 /* Stackable.swift */,
 				9D1831CF1D73EDE100A53419 /* StackableItem.swift */,
+				EAC9EA7023CFCCC700AD870C /* UIEdgeInsets+Utils.swift */,
 				9D1831D01D73EDE100A53419 /* UILabel+stackable.swift */,
 				9D1831D11D73EDE100A53419 /* UIView+stackSize.swift */,
 				9D1831D21D73EDE100A53419 /* VStack.swift */,
 				9D38FEDB1D73A077001CB50F /* stackable.h */,
 				9D38FEDD1D73A077001CB50F /* Info.plist */,
 			);
-			path = stackable;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		9D38FEE61D73A078001CB50F /* stackableTests */ = {
+		9D38FEE61D73A078001CB50F /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				9D5447211D73A48000ED0AE7 /* HStackTests.swift */,
 				9D5447221D73A48000ED0AE7 /* VStackTests.swift */,
+				EAC9EA7223CFD48500AD870C /* UIEdgeInsets+UtilsTests.swift */,
 				9D5447231D73A48000ED0AE7 /* UILabel+heightForWidth+Tests.swift */,
 				9D5447241D73A48000ED0AE7 /* UIView+stackSize+Tests.swift */,
-				9D5447251D73A48000ED0AE7 /* FrameArray+bottom+Tests.swift */,
-				9D5447261D73A48000ED0AE7 /* CGRectProtocol+bottom+Tests.swift */,
+				9D5447251D73A48000ED0AE7 /* FrameArray+maxY+Tests.swift */,
 				9D5447271D73A48000ED0AE7 /* FixedSizeStackableTests.swift */,
 				9D5447281D73A48000ED0AE7 /* StackTests.swift */,
 				9D38FEE91D73A078001CB50F /* Info.plist */,
 			);
-			path = stackableTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -207,11 +210,12 @@
 					};
 				};
 			};
-			buildConfigurationList = 9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "stackable" */;
+			buildConfigurationList = 9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "Stackable" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 9D38FECE1D73A077001CB50F;
@@ -249,13 +253,14 @@
 			files = (
 				9D1831D81D73EDE100A53419 /* Stackable.swift in Sources */,
 				9D1831D41D73EDE100A53419 /* FixedSizeStackable.swift in Sources */,
+				EAC9EA7123CFCCC700AD870C /* UIEdgeInsets+Utils.swift in Sources */,
 				9D1831D91D73EDE100A53419 /* StackableItem.swift in Sources */,
 				9D1831DC1D73EDE100A53419 /* VStack.swift in Sources */,
 				9D1831D71D73EDE100A53419 /* Stack.swift in Sources */,
 				9D1831D61D73EDE100A53419 /* HStack.swift in Sources */,
 				9D1831DA1D73EDE100A53419 /* UILabel+stackable.swift in Sources */,
 				9D1831D31D73EDE100A53419 /* CGRectProtocol.swift in Sources */,
-				9D1831D51D73EDE100A53419 /* FrameArray+bottom.swift in Sources */,
+				9D1831D51D73EDE100A53419 /* FrameArray+maxY.swift in Sources */,
 				9D1831DB1D73EDE100A53419 /* UIView+stackSize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,12 +270,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D54472F1D73A48000ED0AE7 /* FixedSizeStackableTests.swift in Sources */,
-				9D54472D1D73A48000ED0AE7 /* FrameArray+bottom+Tests.swift in Sources */,
+				9D54472D1D73A48000ED0AE7 /* FrameArray+maxY+Tests.swift in Sources */,
 				9D5447301D73A48000ED0AE7 /* StackTests.swift in Sources */,
 				9D54472B1D73A48000ED0AE7 /* UILabel+heightForWidth+Tests.swift in Sources */,
 				9D54472A1D73A48000ED0AE7 /* VStackTests.swift in Sources */,
+				EAC9EA7323CFD48500AD870C /* UIEdgeInsets+UtilsTests.swift in Sources */,
 				9D54472C1D73A48000ED0AE7 /* UIView+stackSize+Tests.swift in Sources */,
-				9D54472E1D73A48000ED0AE7 /* CGRectProtocol+bottom+Tests.swift in Sources */,
 				9D5447291D73A48000ED0AE7 /* HStackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,7 +390,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = stackable/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -406,7 +411,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = stackable/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -421,7 +426,7 @@
 		9D38FEF01D73A078001CB50F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = stackableTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.seek.stackableTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -433,7 +438,7 @@
 		9D38FEF11D73A078001CB50F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = stackableTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.seek.stackableTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -445,7 +450,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "stackable" */ = {
+		9D38FED21D73A077001CB50F /* Build configuration list for PBXProject "Stackable" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9D38FEEA1D73A078001CB50F /* Debug */,

@@ -13,7 +13,7 @@ public protocol Stack: class, Stackable {
 
 extension Stack {
     public var isHidden: Bool {
-        return (self.thingsToStack.filter({ !$0.isHidden }).count == 0)
+        return self.thingsToStack.allSatisfy { $0.isHidden }
     }
     
     func visibleThingsToStack() -> [Stackable] {
@@ -21,22 +21,20 @@ extension Stack {
     }
     
     fileprivate func viewsToLayout() -> [UIView] {
-        var views: [UIView] = []
-        let thingsToStack = self.visibleThingsToStack()
-        for i in 0..<thingsToStack.count {
-            let stackable = thingsToStack[i]
-            if let stack = stackable as? Stack {
-                let innerViews = stack.viewsToLayout()
-                views.append(contentsOf: innerViews)
-            } else {
-                if let view = stackable as? UIView {
-                    views.append(view)
-                } else if let fixedSizeStackable = stackable as? FixedSizeStackable {
-                    views.append(fixedSizeStackable.view)
+        return visibleThingsToStack()
+            .flatMap { stackable -> [UIView] in
+                if let stack = stackable as? Stack {
+                    return stack.viewsToLayout()
+                } else {
+                    if let view = stackable as? UIView {
+                        return [view]
+                    } else if let fixedSizeStackable = stackable as? FixedSizeStackable {
+                       return [fixedSizeStackable.view]
+                    } else {
+                        return []
+                    }
                 }
             }
-        }
-        return views
     }
     
     public func layoutWithFrames(_ frames: [CGRect]) {
@@ -52,7 +50,7 @@ extension Stack {
     }
     
     public func heightForFrames(_ frames: [CGRect]) -> CGFloat {
-        return frames.bottom + self.layoutMargins.bottom
+        return frames.maxY + self.layoutMargins.bottom
     }
     
     public func framesForLayout(_ width: CGFloat) -> [CGRect] {

@@ -6,12 +6,7 @@ import UIKit
 public protocol CGRectProtocol {
     var origin: CGPoint { get }
     var size: CGSize { get }
-}
-
-extension CGRectProtocol {
-    var bottom: CGFloat {
-        return self.origin.y + self.size.height
-    }
+    var maxY: CGFloat { get }
 }
 
 extension CGRect: CGRectProtocol {

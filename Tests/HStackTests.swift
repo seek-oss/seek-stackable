@@ -16,10 +16,10 @@ class HStackTests: XCTestCase {
         let size3 = CGSize(width: 60, height: 12)
         
         let stack = HStack(spacing: spacing, thingsToStack: [
-            view1.stackSize(size1),
-            view2.stackSize(size2),
-            view3.stackSize(size3)
-            ])
+            view1.fixed(size: size1),
+            view2.fixed(size: size2),
+            view3.fixed(size: size3)
+        ])
         
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 3)
@@ -53,8 +53,8 @@ class HStackTests: XCTestCase {
         let size2 = CGSize(width: 55, height: 11)
         
         let stack = HStack(spacing: spacing, layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [
-            view1.stackSize(size1),
-            view2.stackSize(size2)
+            view1.fixed(size: size1),
+            view2.fixed(size: size2)
             ])
         
         let frames = stack.framesForLayout(200)
@@ -83,23 +83,23 @@ class HStackTests: XCTestCase {
         
         let stack = HStack(spacing: spacing, thingsToStack: [
             VStack(spacing: spacing2, thingsToStack: [
-                view1.stackSize(size1),
-                view2.stackSize(size2)
+                view1.fixed(size: size1),
+                view2.fixed(size: size2)
                 ]),
-            view3.stackSize(size3)
-            ])
+            view3.fixed(size: size3)
+        ])
         
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 3)
         // view1
         XCTAssertEqual(frames[0].origin.x, 0)
         XCTAssertEqual(frames[0].origin.y, 0)
-        XCTAssertEqual(frames[0].size.width, 200 - size3.width - spacing)
+        XCTAssertEqual(frames[0].size.width, 50)
         XCTAssertEqual(frames[0].size.height, size1.height)
         // view2
         XCTAssertEqual(frames[1].origin.x, 0)
         XCTAssertEqual(frames[1].origin.y, size1.height + spacing2)
-        XCTAssertEqual(frames[1].size.width, 200 - size3.width - spacing)
+        XCTAssertEqual(frames[1].size.width, 55)
         XCTAssertEqual(frames[1].size.height, size2.height)
         // view3
         XCTAssertEqual(frames[2].origin.x, 200 - size3.width)
@@ -121,10 +121,10 @@ class HStackTests: XCTestCase {
         
         let stack = HStack(spacing: spacing, thingsToStack: [
             VStack(spacing: spacing2, thingsToStack: [
-                view1.stackSize(size1),
-                view2.stackSize(size2)
+                view1.fixed(size: size1),
+                view2.fixed(size: size2)
             ], width: fixedVStackWidth),
-            view3.stackSize(size3)
+            view3.fixed(size: size3)
         ])
         
         let frames = stack.framesForLayout(200)
@@ -169,5 +169,28 @@ class HStackTests: XCTestCase {
             view1,
             view2
         ])
+    }
+    
+    func test_intrinsicContentSize_should_return_correct_size() {
+        let stack = HStack(spacing: 5, thingsToStack: [
+            UIView().fixed(width: 100, height: 100),
+            UIView().fixed(width: 200, height: 50)
+        ])
+        
+        XCTAssertEqual(stack.intrinsicContentSize, CGSize(width: 305, height: 100))
+    }
+    
+    func test_intrinsicContentSize_should_return_zero_when_items_are_hidden() {
+        let view1 = UIView()
+        view1.isHidden = true
+        let view2 = UIView()
+        view2.isHidden = true
+        
+        let stack = HStack(spacing: 5, thingsToStack: [
+            view1.fixed(width: 100, height: 100),
+            view2.fixed(width: 200, height: 50)
+        ])
+        
+        XCTAssertEqual(stack.intrinsicContentSize, .zero)
     }
 }

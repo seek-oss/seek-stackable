@@ -34,13 +34,9 @@ open class HStack: Stack {
         var x = origin.x
         let y = origin.y
         let nonFixedWidth = self.widthForNonFixedSizeStackables(width, thingsToStack: thingsToStack)
-        for i in 0..<thingsToStack.count {
-            if i > 0 {
-                x += self.spacing
-            }
-            
-            let stackable = thingsToStack[i]
-            let stackableWidth: CGFloat!
+        
+        thingsToStack.forEach { stackable in
+            let stackableWidth: CGFloat
             if let fixedSizeStackable = stackable as? FixedSizeStackable {
                 stackableWidth = fixedSizeStackable.size.width
             } else if let fixedSizeStack = stackable as? Stack, let stackWidth = fixedSizeStack.width {
@@ -59,24 +55,47 @@ open class HStack: Stack {
                 frames.append(frame)
                 x += stackableWidth
             }
+            
+            x += self.spacing
         }
         
         return frames
     }
     
+    public var intrinsicContentSize: CGSize {
+        // TODO: add adjustments for layoutMargins (not currently needed so okay to defer)
+        
+        let items = visibleThingsToStack()
+        
+        guard !items.isEmpty else { return .zero }
+        
+        // width
+        let totalWidthOfItems = items.reduce(0, { $0 + $1.intrinsicContentSize.width })
+        let totalHorizontalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
+        let intrinsicWidth = totalWidthOfItems + totalHorizontalSpacing
+        
+        // height
+        let intrinsicHeight = items.reduce(0, { max($0, $1.intrinsicContentSize.height) })
+        
+        return CGSize(width: intrinsicWidth, height: intrinsicHeight)
+    }
+    
     // MARK: helpers
-    fileprivate func widthForNonFixedSizeStackables(_ width: CGFloat, thingsToStack: [Stackable]) -> CGFloat {
-        let fixedWidths = thingsToStack.filter({
-            $0 is FixedSizeStackable || ($0 as? Stack)?.width != nil
-        }).map { (stackable) -> CGFloat in
-            if let stack = stackable as? Stack, let stackWidth = stack.width {
-                return stackWidth
-            } else if let fixedSizeStackable = stackable as? FixedSizeStackable {
-                return fixedSizeStackable.size.width
-            } else {
-                return 0
+    
+    private  func widthForNonFixedSizeStackables(_ width: CGFloat, thingsToStack: [Stackable]) -> CGFloat {
+        let fixedWidths = thingsToStack
+            .filter {
+                $0 is FixedSizeStackable || ($0 as? Stack)?.width != nil
             }
-        }
+            .map { (stackable) -> CGFloat in
+                if let stack = stackable as? Stack, let stackWidth = stack.width {
+                    return stackWidth
+                } else if let fixedSizeStackable = stackable as? FixedSizeStackable {
+                    return fixedSizeStackable.size.width
+                } else {
+                    return 0
+                }
+            }
         
         let totalFixedWidth = fixedWidths.reduce(0.0, +)
         let totalNonFixedWidth = width - totalFixedWidth - (((CGFloat(thingsToStack.count) - 1) * self.spacing))
