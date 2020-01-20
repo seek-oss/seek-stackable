@@ -51,7 +51,7 @@ extension Stack {
     }
     
     public func heightForFrames(_ frames: [CGRect]) -> CGFloat {
-        return frames.bottom + self.layoutMargins.bottom
+        return frames.maxY + self.layoutMargins.bottom
     }
     
     public func framesForLayout(_ width: CGFloat) -> [CGRect] {

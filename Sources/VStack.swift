@@ -40,7 +40,7 @@ open class VStack: Stack  {
                 if let stack = stackable as? Stack {
                     let innerFrames = stack.framesForLayout(width, origin: CGPoint(x: origin.x, y: y))
                     frames.append(contentsOf: innerFrames)
-                    y = frames.bottom
+                    y = frames.maxY
                 } else if let item = stackable as? StackableItem {
                     let itemHeight = item.heightForWidth(width)
                     let itemWidth = min(width, item.intrinsicContentSize.width)

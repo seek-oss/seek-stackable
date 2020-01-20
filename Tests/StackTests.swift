@@ -73,7 +73,7 @@ class StackTests: XCTestCase {
         
         let frames = [ frame1, frame2, frame3 ]
         let height = stack.heightForFrames(frames)
-        XCTAssertEqual(height, frames.bottom + bottomMargin)
+        XCTAssertEqual(height, frames.maxY + bottomMargin)
     }
 
     class MockStack: Stack {
