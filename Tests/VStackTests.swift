@@ -169,4 +169,35 @@ class VStackTests: XCTestCase {
             view2
         ])
     }
+    
+    func test_intrinsicContentSize_should_return_correct_size() {
+        let stack = VStack(
+            spacing: 5,
+            layoutMargins: UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10),
+            thingsToStack: [
+                UIView().fixed(width: 100, height: 100),
+                UIView().fixed(width: 200, height: 50)
+            ]
+        )
+        
+        XCTAssertEqual(stack.intrinsicContentSize, CGSize(width: 220, height: 195))
+    }
+    
+    func test_intrinsicContentSize_should_return_zero_when_items_are_hidden() {
+        let view1 = UIView()
+        view1.isHidden = true
+        let view2 = UIView()
+        view2.isHidden = true
+        
+        let stack = VStack(
+            spacing: 5,
+            layoutMargins: UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10),
+            thingsToStack: [
+                view1.fixed(width: 100, height: 100),
+                view2.fixed(width: 200, height: 50)
+            ]
+        )
+        
+        XCTAssertEqual(stack.intrinsicContentSize, .zero)
+    }
 }

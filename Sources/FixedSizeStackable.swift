@@ -4,34 +4,19 @@
 import UIKit
 
 open class FixedSizeStackable: StackableItem {
-    var view: UIView
-    var width: CGFloat?
-    var height: CGFloat?
+    let view: UIView
+    let size: CGSize
     
-    var size: CGSize {
-        let width = self.width ?? view.intrinsicContentSize.width
-        let height = self.height ?? view.intrinsicContentSize.height
-        return CGSize(width: width, height: height)
-    }
-    
-    public init(view: UIView, width: CGFloat, height: CGFloat) {
+    public init(view: UIView, size: CGSize) {
         self.view = view
-        self.width = width
-        self.height = height
+        self.size = size
     }
     
-    public init(view: UIView, width: CGFloat) {
-        self.view = view
-        self.width = width
-    }
-    
-    public init(view: UIView, height: CGFloat) {
-        self.view = view
-        self.height = height
-    }
-    
-    public convenience init(view: UIView, size: CGSize) {
-        self.init(view: view, width: size.width, height: size.height)
+    public convenience init(view: UIView, width: CGFloat, height: CGFloat) {
+        self.init(view: view, size: CGSize(
+            width: width,
+            height: height
+        ))
     }
     
     open func heightForWidth(_ width: CGFloat) -> CGFloat {

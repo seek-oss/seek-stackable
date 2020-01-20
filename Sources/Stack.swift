@@ -21,8 +21,7 @@ extension Stack {
     }
     
     fileprivate func viewsToLayout() -> [UIView] {
-        return self
-            .visibleThingsToStack()
+        return visibleThingsToStack()
             .flatMap { stackable -> [UIView] in
                 if let stack = stackable as? Stack {
                     return stack.viewsToLayout()
