@@ -4,15 +4,15 @@
 import UIKit
 
 open class VStack: Stack {
-    public let thingsToStack: [Stackable]
+    public let thingsToStack: [StackableProtocol]
     public let spacing: CGFloat
     public let layoutMargins: UIEdgeInsets
     public let width: CGFloat?
 
     public init(
         spacing: CGFloat = 0.0,
-        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
-        thingsToStack: [Stackable],
+        layoutMargins: UIEdgeInsets = .zero,
+        thingsToStack: [StackableProtocol],
         width: CGFloat? = nil
     ) {
         self.spacing = spacing
@@ -23,9 +23,9 @@ open class VStack: Stack {
 
     public convenience init(
         spacing: CGFloat = 0.0,
-        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
+        layoutMargins: UIEdgeInsets = .zero,
         width: CGFloat? = nil,
-        thingsToStack: () -> [Stackable]
+        thingsToStack: () -> [StackableProtocol]
     ) {
         self.init(
             spacing: spacing,
@@ -38,7 +38,7 @@ open class VStack: Stack {
     open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         var origin = origin
         var width = width
-        if layoutMargins != UIEdgeInsets.zero {
+        if layoutMargins != .zero {
             origin.x += layoutMargins.left
             origin.y += layoutMargins.top
             width -= (layoutMargins.left + layoutMargins.right)

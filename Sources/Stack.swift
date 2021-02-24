@@ -3,8 +3,8 @@
 
 import UIKit
 
-public protocol Stack: class, Stackable {
-    var thingsToStack: [Stackable] { get }
+public protocol Stack: class, StackableProtocol {
+    var thingsToStack: [StackableProtocol] { get }
     var spacing: CGFloat { get }
     var layoutMargins: UIEdgeInsets { get }
     var width: CGFloat? { get }
@@ -16,7 +16,7 @@ extension Stack {
         return self.thingsToStack.allSatisfy { $0.isHidden }
     }
 
-    func visibleThingsToStack() -> [Stackable] {
+    func visibleThingsToStack() -> [StackableProtocol] {
         return self.thingsToStack.filter({ !$0.isHidden })
     }
 

@@ -3,7 +3,7 @@
 
 import UIKit
 
-public protocol Stackable {
+public protocol StackableProtocol {
     var isHidden: Bool { get }
     var intrinsicContentSize: CGSize { get }
 }
