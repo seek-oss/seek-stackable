@@ -2,8 +2,9 @@
 //
 
 import UIKit
-@testable import stackable
 import XCTest
+
+@testable import Stackable
 
 class UILabel_heightForWidth_Tests: XCTestCase {
     func test_heightForWidth_should_return_expected_result() {
@@ -13,10 +14,10 @@ class UILabel_heightForWidth_Tests: XCTestCase {
         let label = UILabel()
         label.text = text
         label.font = font
-        
+
         let expectedHeight = label.sizeThatFits(CGSize(width: width, height: 9999)).height
         let result = label.heightForWidth(width)
-        
+
         XCTAssertEqual(result, expectedHeight)
     }
 }
