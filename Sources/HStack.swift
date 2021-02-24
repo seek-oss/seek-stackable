@@ -4,15 +4,15 @@
 import UIKit
 
 open class HStack: Stack {
-    public let thingsToStack: [Stackable]
+    public let thingsToStack: [StackableProtocol]
     public let spacing: CGFloat
     public let layoutMargins: UIEdgeInsets
     public let width: CGFloat?
 
     public init(
         spacing: CGFloat = 0.0,
-        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
-        thingsToStack: [Stackable],
+        layoutMargins: UIEdgeInsets = .zero,
+        thingsToStack: [StackableProtocol],
         width: CGFloat? = nil
     ) {
         self.spacing = spacing
@@ -23,9 +23,9 @@ open class HStack: Stack {
 
     public convenience init(
         spacing: CGFloat = 0.0,
-        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
+        layoutMargins: UIEdgeInsets = .zero,
         width: CGFloat? = nil,
-        thingsToStack: () -> [Stackable]
+        thingsToStack: () -> [StackableProtocol]
     ) {
         self.init(
             spacing: spacing,
@@ -99,7 +99,7 @@ open class HStack: Stack {
 
     private func widthForNonFixedSizeStackables(
         _ width: CGFloat,
-        thingsToStack: [Stackable]
+        thingsToStack: [StackableProtocol]
     ) -> CGFloat {
         let fixedWidths =
             thingsToStack

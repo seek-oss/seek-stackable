@@ -82,14 +82,14 @@ class StackTests: XCTestCase {
 
     class MockStack: Stack {
         var width: CGFloat?
-        let thingsToStack: [Stackable]
+        let thingsToStack: [StackableProtocol]
         let spacing: CGFloat
         let layoutMargins: UIEdgeInsets
 
         init(
             spacing: CGFloat = 0.0,
             layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
-            thingsToStack: [Stackable]
+            thingsToStack: [StackableProtocol]
         ) {
             self.spacing = spacing
             self.layoutMargins = layoutMargins
