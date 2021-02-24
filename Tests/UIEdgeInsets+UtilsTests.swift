@@ -3,7 +3,7 @@
 
 import XCTest
 
-@testable import stackable
+@testable import Stackable
 
 class UIEdgeInsets_UtilsTests: XCTestCase {
 

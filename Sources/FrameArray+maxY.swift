@@ -2,6 +2,7 @@
 //
 
 import Foundation
+import UIKit
 
 // CGRectProtocol is necessary to avoid compile error 'Element' constrained to non-protocol type
 extension Array where Element: CGRectProtocol {

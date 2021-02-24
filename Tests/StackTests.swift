@@ -4,7 +4,7 @@
 import UIKit
 import XCTest
 
-@testable import stackable
+@testable import Stackable
 
 class StackTests: XCTestCase {
     func test_hidden_for_all_hidden_should_return_true() {

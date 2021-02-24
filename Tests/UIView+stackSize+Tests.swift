@@ -4,7 +4,7 @@
 import Foundation
 import XCTest
 
-@testable import stackable
+@testable import Stackable
 
 class UIView_stackSize_Tests: XCTestCase {
     func test_stackSize_with_size_should_return_expected_result() {
