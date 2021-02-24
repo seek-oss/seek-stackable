@@ -10,5 +10,5 @@ public protocol CGRectProtocol {
 }
 
 extension CGRect: CGRectProtocol {
-    
+
 }

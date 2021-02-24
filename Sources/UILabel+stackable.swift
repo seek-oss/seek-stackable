@@ -5,6 +5,7 @@ import UIKit
 
 extension UILabel: StackableItem {
     public func heightForWidth(_ width: CGFloat) -> CGFloat {
-        return self.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)).height
+        return self.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
+            .height
     }
 }

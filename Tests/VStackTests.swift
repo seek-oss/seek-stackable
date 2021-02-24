@@ -2,8 +2,9 @@
 //
 
 import Foundation
-@testable import stackable
 import XCTest
+
+@testable import stackable
 
 class VStackTests: XCTestCase {
     func test_framesForLayout_should_return_spaced_frames() {
@@ -14,13 +15,16 @@ class VStackTests: XCTestCase {
         let height2: CGFloat = 11
         let view3 = UIView()
         let height3: CGFloat = 12
-        
-        let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.fixed(width: 100, height: height1),
-            view2.fixed(width: 100, height: height2),
-            view3.fixed(width: 100, height: height3)
-        ])
-        
+
+        let stack = VStack(
+            spacing: spacing,
+            thingsToStack: [
+                view1.fixed(width: 100, height: height1),
+                view2.fixed(width: 100, height: height2),
+                view3.fixed(width: 100, height: height3),
+            ]
+        )
+
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 3)
         // view1
@@ -45,18 +49,22 @@ class VStackTests: XCTestCase {
         let leftMargin: CGFloat = 8
         let bottomMargin: CGFloat = 10
         let rightMargin: CGFloat = 8
-        
+
         let spacing: CGFloat = 2
         let view1 = UIView()
         let height1: CGFloat = 10
         let view2 = UIView()
         let height2: CGFloat = 11
-        
-        let stack = VStack(spacing: spacing, layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin), thingsToStack: [
-            view1.fixed(width: 100, height: height1),
-            view2.fixed(width: 100, height: height2)
-            ])
-        
+
+        let stack = VStack(
+            spacing: spacing,
+            layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin),
+            thingsToStack: [
+                view1.fixed(width: 100, height: height1),
+                view2.fixed(width: 100, height: height2),
+            ]
+        )
+
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 2)
         // view1
@@ -80,15 +88,21 @@ class VStackTests: XCTestCase {
         let height2: CGFloat = 11
         let view3 = UIView()
         let height3: CGFloat = 12
-        
-        let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.fixed(width: 100, height: height1),
-            VStack(spacing: spacing2, thingsToStack: [
-                view2.fixed(width: 100, height: height2),
-                view3.fixed(width: 100, height: height3)
-                ])
-            ])
-        
+
+        let stack = VStack(
+            spacing: spacing,
+            thingsToStack: [
+                view1.fixed(width: 100, height: height1),
+                VStack(
+                    spacing: spacing2,
+                    thingsToStack: [
+                        view2.fixed(width: 100, height: height2),
+                        view3.fixed(width: 100, height: height3),
+                    ]
+                ),
+            ]
+        )
+
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 3)
         // view1
@@ -117,15 +131,21 @@ class VStackTests: XCTestCase {
         let size2 = CGSize(width: 50, height: 11)
         let view3 = UIView()
         let size3 = CGSize(width: 60, height: 12)
-        
-        let stack = VStack(spacing: spacing, thingsToStack: [
-            view1.fixed(width: 100, height: height1),
-            HStack(spacing: spacing2, thingsToStack: [
-                view2.fixed(size: size2),
-                view3.fixed(size: size3)
-                ])
-            ])
-        
+
+        let stack = VStack(
+            spacing: spacing,
+            thingsToStack: [
+                view1.fixed(width: 100, height: height1),
+                HStack(
+                    spacing: spacing2,
+                    thingsToStack: [
+                        view2.fixed(size: size2),
+                        view3.fixed(size: size3),
+                    ]
+                ),
+            ]
+        )
+
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 3)
         // view1
@@ -144,60 +164,65 @@ class VStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.width, size3.width)
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
-    
+
     func test_convenience_init_with_thingsToStack_closure() {
         let layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         let spacing: CGFloat = 2
         let view1 = UILabel()
         let view2 = UILabel()
-        
+
         let stack = VStack(
             spacing: spacing,
             layoutMargins: layoutMargins,
             width: 200
-        ) {[
-            view1,
-            view2
-        ]}
-        
+        ) {
+            [
+                view1,
+                view2,
+            ]
+        }
+
         XCTAssertEqual(stack.spacing, 2)
         XCTAssertEqual(stack.layoutMargins, layoutMargins)
         XCTAssertEqual(stack.width, 200)
         XCTAssertEqual(stack.thingsToStack.count, 2)
-        XCTAssertEqual(stack.thingsToStack as? [UILabel], [
-            view1,
-            view2
-        ])
+        XCTAssertEqual(
+            stack.thingsToStack as? [UILabel],
+            [
+                view1,
+                view2,
+            ]
+        )
     }
-    
+
     func test_intrinsicContentSize_should_return_correct_size() {
         let stack = VStack(
             spacing: 5,
             layoutMargins: UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10),
             thingsToStack: [
                 UIView().fixed(width: 100, height: 100),
-                UIView().fixed(width: 200, height: 50)
+                UIView().fixed(width: 200, height: 50),
             ]
         )
-        
+
         XCTAssertEqual(stack.intrinsicContentSize, CGSize(width: 220, height: 195))
     }
-    
+
     func test_intrinsicContentSize_should_return_zero_when_items_are_hidden() {
         let view1 = UIView()
         view1.isHidden = true
         let view2 = UIView()
         view2.isHidden = true
-        
+
         let stack = VStack(
             spacing: 5,
             layoutMargins: UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10),
             thingsToStack: [
                 view1.fixed(width: 100, height: 100),
-                view2.fixed(width: 200, height: 50)
+                view2.fixed(width: 200, height: 50),
             ]
         )
-        
+
         XCTAssertEqual(stack.intrinsicContentSize, .zero)
     }
 }

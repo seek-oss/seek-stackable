@@ -3,20 +3,30 @@
 
 import UIKit
 
-open class VStack: Stack  {
+open class VStack: Stack {
     public let thingsToStack: [Stackable]
     public let spacing: CGFloat
     public let layoutMargins: UIEdgeInsets
     public let width: CGFloat?
-    
-    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable], width: CGFloat? = nil) {
+
+    public init(
+        spacing: CGFloat = 0.0,
+        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
+        thingsToStack: [Stackable],
+        width: CGFloat? = nil
+    ) {
         self.spacing = spacing
         self.layoutMargins = layoutMargins
         self.thingsToStack = thingsToStack
         self.width = width
     }
-    
-    public convenience init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, width: CGFloat? = nil, thingsToStack: () -> [Stackable]) {
+
+    public convenience init(
+        spacing: CGFloat = 0.0,
+        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
+        width: CGFloat? = nil,
+        thingsToStack: () -> [Stackable]
+    ) {
         self.init(
             spacing: spacing,
             layoutMargins: layoutMargins,
@@ -24,7 +34,7 @@ open class VStack: Stack  {
             width: width
         )
     }
-    
+
     open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         var origin = origin
         var width = width
@@ -38,7 +48,10 @@ open class VStack: Stack  {
         self.visibleThingsToStack()
             .forEach { stackable in
                 if let stack = stackable as? Stack {
-                    let innerFrames = stack.framesForLayout(width, origin: CGPoint(x: origin.x, y: y))
+                    let innerFrames = stack.framesForLayout(
+                        width,
+                        origin: CGPoint(x: origin.x, y: y)
+                    )
                     frames.append(contentsOf: innerFrames)
                     y = frames.maxY
                 } else if let item = stackable as? StackableItem {
@@ -52,20 +65,23 @@ open class VStack: Stack  {
             }
         return frames
     }
-    
+
     public var intrinsicContentSize: CGSize {
         let items = visibleThingsToStack()
-        
+
         guard !items.isEmpty else { return .zero }
-        
+
         // width
-        let intrinsicWidth = items.reduce(0, { max($0, $1.intrinsicContentSize.width) }) + layoutMargins.horizontalInsets
-        
+        let intrinsicWidth =
+            items.reduce(0, { max($0, $1.intrinsicContentSize.width) })
+            + layoutMargins.horizontalInsets
+
         // height
         let totalHeightOfItems = items.reduce(0, { $0 + $1.intrinsicContentSize.height })
         let totalVerticalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
-        let intrinsicHeight = totalHeightOfItems + totalVerticalSpacing + layoutMargins.verticalInsets
-        
+        let intrinsicHeight =
+            totalHeightOfItems + totalVerticalSpacing + layoutMargins.verticalInsets
+
         return CGSize(width: intrinsicWidth, height: intrinsicHeight)
     }
 }
