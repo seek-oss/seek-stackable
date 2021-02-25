@@ -36,14 +36,15 @@ open class HStack: Stack {
     }
 
     open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
-        // TODO: add adjustments for layoutMargins (not currently needed so okay to defer)
-
-        let thingsToStack = self.visibleThingsToStack()
+        let thingsToStack = visibleThingsToStack()
         var frames: [CGRect] = []
 
-        var x = origin.x
-        let y = origin.y
-        let nonFixedWidth = self.widthForNonFixedSizeStackables(width, thingsToStack: thingsToStack)
+        var x = origin.x + layoutMargins.left
+        let y = origin.y + layoutMargins.top
+        let nonFixedWidth = widthForNonFixedSizeStackables(
+            width,
+            thingsToStack: thingsToStack
+        )
 
         thingsToStack.forEach { stackable in
             let stackableWidth: CGFloat
@@ -60,7 +61,7 @@ open class HStack: Stack {
             if let stack = stackable as? Stack {
                 let innerFrames = stack.framesForLayout(
                     stackableWidth,
-                    origin: CGPoint(x: x, y: origin.y)
+                    origin: CGPoint(x: x, y: y)
                 )
                 frames.append(contentsOf: innerFrames)
                 x += stackableWidth
@@ -71,28 +72,27 @@ open class HStack: Stack {
                 x += stackableWidth
             }
 
-            x += self.spacing
+            x += spacing
         }
 
         return frames
     }
 
     public var intrinsicContentSize: CGSize {
-        // TODO: add adjustments for layoutMargins (not currently needed so okay to defer)
-
         let items = visibleThingsToStack()
 
         guard !items.isEmpty else { return .zero }
 
-        // width
         let totalWidthOfItems = items.reduce(0, { $0 + $1.intrinsicContentSize.width })
         let totalHorizontalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
         let intrinsicWidth = totalWidthOfItems + totalHorizontalSpacing
 
-        // height
         let intrinsicHeight = items.reduce(0, { max($0, $1.intrinsicContentSize.height) })
 
-        return CGSize(width: intrinsicWidth, height: intrinsicHeight)
+        return CGSize(
+            width: intrinsicWidth + layoutMargins.horizontalInsets,
+            height: intrinsicHeight + layoutMargins.verticalInsets
+        )
     }
 
     // MARK: helpers
@@ -117,8 +117,10 @@ open class HStack: Stack {
             }
 
         let totalFixedWidth = fixedWidths.reduce(0.0, +)
-        let totalNonFixedWidth =
-            width - totalFixedWidth - (((CGFloat(thingsToStack.count) - 1) * self.spacing))
+        let totalNonFixedWidth = width
+            - layoutMargins.horizontalInsets
+            - totalFixedWidth
+            - (((CGFloat(thingsToStack.count) - 1) * spacing))
         let numberOfStackablesWithNonFixedWidth = thingsToStack.count - fixedWidths.count
         return floor(totalNonFixedWidth / CGFloat(numberOfStackablesWithNonFixedWidth))
     }

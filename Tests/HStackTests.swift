@@ -68,13 +68,13 @@ class HStackTests: XCTestCase {
         let frames = stack.framesForLayout(200)
         XCTAssertEqual(frames.count, 2)
         // view1
-        XCTAssertEqual(frames[0].origin.x, 0)
-        XCTAssertEqual(frames[0].origin.y, 0)  // TODO: HStack is currently not respecting margins
+        XCTAssertEqual(frames[0].origin.x, 8)
+        XCTAssertEqual(frames[0].origin.y, 10)
         XCTAssertEqual(frames[0].size.width, size1.width)
         XCTAssertEqual(frames[0].size.height, size1.height)
         // view2
-        XCTAssertEqual(frames[1].origin.x, size1.width + spacing)
-        XCTAssertEqual(frames[1].origin.y, 0)
+        XCTAssertEqual(frames[1].origin.x, size1.width + 8 + spacing)
+        XCTAssertEqual(frames[1].origin.y, 10)
         XCTAssertEqual(frames[1].size.width, size2.width)
         XCTAssertEqual(frames[1].size.height, size2.height)
     }
@@ -166,6 +166,59 @@ class HStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.width, size3.width)
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
+    
+    func test_framesForLayout_should_return_frames_for_nested_vstack_with_layoutMargins() {
+        let spacing: CGFloat = 2
+        let spacing2: CGFloat = 1
+        let view1 = UIView()
+        let size1 = CGSize(width: 100, height: 10)
+        let view2 = UIView()
+        let size2 = CGSize(width: 100, height: 11)
+        let label = UILabel()
+        label.text = "Lorem ipsum dolor sit amet, ut sed agam omittantur, te brute delicata vel, vel detraxit concludaturque ne."
+        let topMargin: CGFloat = 10
+        let leftMargin: CGFloat = 8
+        let bottomMargin: CGFloat = 10
+        let rightMargin: CGFloat = 8
+
+        let stack = HStack(
+            spacing: spacing,
+            thingsToStack: [
+                VStack(
+                    spacing: spacing2,
+                    layoutMargins: UIEdgeInsets(
+                        top: topMargin,
+                        left: leftMargin,
+                        bottom: bottomMargin,
+                        right: rightMargin
+                    ),
+                    thingsToStack: [
+                        view1.fixed(size: size1),
+                        view2.fixed(size: size2),
+                    ]
+                ),
+                label,
+            ]
+        )
+
+        let frames = stack.framesForLayout(200)
+        XCTAssertEqual(frames.count, 3)
+        // view1
+        XCTAssertEqual(frames[0].origin.x, leftMargin)
+        XCTAssertEqual(frames[0].origin.y, topMargin)
+        XCTAssertEqual(frames[0].size.width, 100 - (spacing / 2) - leftMargin - rightMargin)
+        XCTAssertEqual(frames[0].size.height, size1.height)
+        // view2
+        XCTAssertEqual(frames[1].origin.x, leftMargin)
+        XCTAssertEqual(frames[1].origin.y, size1.height + spacing2 + topMargin)
+        XCTAssertEqual(frames[1].size.width, 100 - (spacing / 2) - leftMargin - rightMargin)
+        XCTAssertEqual(frames[1].size.height, size2.height)
+        // label
+        XCTAssertEqual(frames[2].origin.x, 100 + (spacing / 2))
+        XCTAssertEqual(frames[2].origin.y, 0)
+        XCTAssertEqual(frames[2].size.width, 100 - (spacing / 2))
+        XCTAssertEqual(frames[2].size.height, label.heightForWidth(100 - (spacing / 2)))
+    }
 
     func test_convenience_init_with_thingsToStack_closure() {
         let layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -208,6 +261,19 @@ class HStackTests: XCTestCase {
 
         XCTAssertEqual(stack.intrinsicContentSize, CGSize(width: 305, height: 100))
     }
+    
+    func test_intrinsicContentSize_with_layoutMargins_should_return_correct_size() {
+        let stack = HStack(
+            spacing: 5,
+            layoutMargins: UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20),
+            thingsToStack: [
+                UIView().fixed(width: 100, height: 100),
+                UIView().fixed(width: 200, height: 50),
+            ]
+        )
+
+        XCTAssertEqual(stack.intrinsicContentSize, CGSize(width: 335, height: 130))
+    }
 
     func test_intrinsicContentSize_should_return_zero_when_items_are_hidden() {
         let view1 = UIView()
@@ -217,6 +283,7 @@ class HStackTests: XCTestCase {
 
         let stack = HStack(
             spacing: 5,
+            layoutMargins: UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20),
             thingsToStack: [
                 view1.fixed(width: 100, height: 100),
                 view2.fixed(width: 200, height: 50),
