@@ -164,6 +164,59 @@ class VStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.width, size3.width)
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
+    
+    func test_framesForLayout_with_layoutMargins_should_return_frames_for_nested_hstack() {
+        let spacing: CGFloat = 2
+        let view1 = UIView()
+        let height1: CGFloat = 10
+        let spacing2: CGFloat = 10
+        let view2 = UIView()
+        let size2 = CGSize(width: 50, height: 11)
+        let label = UILabel()
+        label.text = "Lorem ipsum dolor sit amet, ut sed agam omittantur, te brute delicata vel, vel detraxit concludaturque ne."
+        let topMargin: CGFloat = 10
+        let leftMargin: CGFloat = 8
+        let bottomMargin: CGFloat = 10
+        let rightMargin: CGFloat = 8
+
+        let stack = VStack(
+            spacing: spacing,
+            thingsToStack: [
+                view1.fixed(width: 100, height: height1),
+                HStack(
+                    spacing: spacing2,
+                    layoutMargins: UIEdgeInsets(
+                        top: topMargin,
+                        left: leftMargin,
+                        bottom: bottomMargin,
+                        right: rightMargin
+                    ),
+                    thingsToStack: [
+                        view2.fixed(size: size2),
+                        label,
+                    ]
+                ),
+            ]
+        )
+
+        let frames = stack.framesForLayout(200)
+        XCTAssertEqual(frames.count, 3)
+        // view1
+        XCTAssertEqual(frames[0].origin.x, 0)
+        XCTAssertEqual(frames[0].origin.y, 0)
+        XCTAssertEqual(frames[0].size.width, 100)
+        XCTAssertEqual(frames[0].size.height, height1)
+        // view2
+        XCTAssertEqual(frames[1].origin.x, leftMargin)
+        XCTAssertEqual(frames[1].origin.y, height1 + spacing + topMargin)
+        XCTAssertEqual(frames[1].size.width, size2.width)
+        XCTAssertEqual(frames[1].size.height, size2.height)
+        // view3
+        XCTAssertEqual(frames[2].origin.x, 50 + spacing2 + leftMargin)
+        XCTAssertEqual(frames[2].origin.y, height1 + spacing + topMargin)
+        XCTAssertEqual(frames[2].size.width, 200 - frames[1].maxX - spacing2 - rightMargin)
+        XCTAssertEqual(frames[2].size.height, label.heightForWidth(200 - frames[1].maxX - spacing2 - rightMargin))
+    }
 
     func test_convenience_init_with_thingsToStack_closure() {
         let layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
