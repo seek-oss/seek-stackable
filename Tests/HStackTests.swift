@@ -6,7 +6,7 @@ import XCTest
 
 @testable import Stackable
 
-class HStackTests: XCTestCase {
+class OldHStackTests: XCTestCase {
     func test_framesForLayout_should_return_spaced_frames() {
         let spacing: CGFloat = 2
         let view1 = UIView()
@@ -16,7 +16,7 @@ class HStackTests: XCTestCase {
         let view3 = UIView()
         let size3 = CGSize(width: 60, height: 12)
 
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: spacing,
             thingsToStack: [
                 view1.fixed(size: size1),
@@ -56,7 +56,7 @@ class HStackTests: XCTestCase {
         let view2 = UIView()
         let size2 = CGSize(width: 55, height: 11)
 
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: spacing,
             layoutMargins: UIEdgeInsets(top: topMargin, left: leftMargin, bottom: bottomMargin, right: rightMargin),
             thingsToStack: [
@@ -79,7 +79,7 @@ class HStackTests: XCTestCase {
         XCTAssertEqual(frames[1].size.height, size2.height)
     }
 
-    func test_framesForLayout_should_return_frames_for_nested_vstack() {
+    func test_framesForLayout_should_return_frames_for_nested_OldVStack() {
         let spacing: CGFloat = 2
         let spacing2: CGFloat = 1
         let view1 = UIView()
@@ -89,10 +89,10 @@ class HStackTests: XCTestCase {
         let view3 = UIView()
         let size3 = CGSize(width: 60, height: 12)
 
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: spacing,
             thingsToStack: [
-                VStack(
+                OldVStack(
                     spacing: spacing2,
                     thingsToStack: [
                         view1.fixed(size: size1),
@@ -122,7 +122,7 @@ class HStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
 
-    func test_framesForLayout_should_return_frames_for_nested_vstack_with_fixed_width() {
+    func test_framesForLayout_should_return_frames_for_nested_OldVStack_with_fixed_width() {
         let spacing: CGFloat = 2
         let spacing2: CGFloat = 1
         let view1 = UIView()
@@ -131,18 +131,18 @@ class HStackTests: XCTestCase {
         let size2 = CGSize(width: 100, height: 11)
         let view3 = UIView()
         let size3 = CGSize(width: 60, height: 12)
-        let fixedVStackWidth: CGFloat = 50
+        let fixedOldVStackWidth: CGFloat = 50
 
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: spacing,
             thingsToStack: [
-                VStack(
+                OldVStack(
                     spacing: spacing2,
                     thingsToStack: [
                         view1.fixed(size: size1),
                         view2.fixed(size: size2),
                     ],
-                    width: fixedVStackWidth
+                    width: fixedOldVStackWidth
                 ),
                 view3.fixed(size: size3),
             ]
@@ -153,21 +153,21 @@ class HStackTests: XCTestCase {
         // view1
         XCTAssertEqual(frames[0].origin.x, 0)
         XCTAssertEqual(frames[0].origin.y, 0)
-        XCTAssertEqual(frames[0].size.width, fixedVStackWidth)
+        XCTAssertEqual(frames[0].size.width, fixedOldVStackWidth)
         XCTAssertEqual(frames[0].size.height, size1.height)
         // view2
         XCTAssertEqual(frames[1].origin.x, 0)
         XCTAssertEqual(frames[1].origin.y, size1.height + spacing2)
-        XCTAssertEqual(frames[1].size.width, fixedVStackWidth)
+        XCTAssertEqual(frames[1].size.width, fixedOldVStackWidth)
         XCTAssertEqual(frames[1].size.height, size2.height)
         // view3
-        XCTAssertEqual(frames[2].origin.x, fixedVStackWidth + spacing)
+        XCTAssertEqual(frames[2].origin.x, fixedOldVStackWidth + spacing)
         XCTAssertEqual(frames[2].origin.y, 0)
         XCTAssertEqual(frames[2].size.width, size3.width)
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
     
-    func test_framesForLayout_should_return_frames_for_nested_vstack_with_layoutMargins() {
+    func test_framesForLayout_should_return_frames_for_nested_OldVStack_with_layoutMargins() {
         let spacing: CGFloat = 2
         let spacing2: CGFloat = 1
         let view1 = UIView()
@@ -181,10 +181,10 @@ class HStackTests: XCTestCase {
         let bottomMargin: CGFloat = 10
         let rightMargin: CGFloat = 8
 
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: spacing,
             thingsToStack: [
-                VStack(
+                OldVStack(
                     spacing: spacing2,
                     layoutMargins: UIEdgeInsets(
                         top: topMargin,
@@ -226,7 +226,7 @@ class HStackTests: XCTestCase {
         let view1 = UILabel()
         let view2 = UILabel()
 
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: spacing,
             layoutMargins: layoutMargins,
             width: 200
@@ -251,7 +251,7 @@ class HStackTests: XCTestCase {
     }
 
     func test_intrinsicContentSize_should_return_correct_size() {
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: 5,
             thingsToStack: [
                 UIView().fixed(width: 100, height: 100),
@@ -263,7 +263,7 @@ class HStackTests: XCTestCase {
     }
     
     func test_intrinsicContentSize_with_layoutMargins_should_return_correct_size() {
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: 5,
             layoutMargins: UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20),
             thingsToStack: [
@@ -281,7 +281,7 @@ class HStackTests: XCTestCase {
         let view2 = UIView()
         view2.isHidden = true
 
-        let stack = HStack(
+        let stack = OldHStack(
             spacing: 5,
             layoutMargins: UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20),
             thingsToStack: [

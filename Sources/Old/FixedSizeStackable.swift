@@ -3,7 +3,7 @@
 
 import UIKit
 
-open class FixedSizeStackable: StackableItem {
+open class FixedSizeStackable: OldStackableItem {
     let view: UIView
     let size: CGSize
 

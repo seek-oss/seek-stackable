@@ -3,7 +3,7 @@
 
 import UIKit
 
-public protocol Stack: class, StackableProtocol {
+public protocol OldStack: AnyObject, StackableProtocol {
     var thingsToStack: [StackableProtocol] { get }
     var spacing: CGFloat { get }
     var layoutMargins: UIEdgeInsets { get }
@@ -11,7 +11,7 @@ public protocol Stack: class, StackableProtocol {
     func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect]
 }
 
-extension Stack {
+extension OldStack {
     public var isHidden: Bool {
         return self.thingsToStack.allSatisfy { $0.isHidden }
     }
@@ -23,7 +23,7 @@ extension Stack {
     fileprivate func viewsToLayout() -> [UIView] {
         return visibleThingsToStack()
             .flatMap { stackable -> [UIView] in
-                if let stack = stackable as? Stack {
+                if let stack = stackable as? OldStack {
                     return stack.viewsToLayout()
                 } else {
                     if let view = stackable as? UIView {

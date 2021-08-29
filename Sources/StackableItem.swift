@@ -1,8 +1,8 @@
-//  Copyright © 2016 SEEK. All rights reserved.
+//  Copyright © 2021 SEEK Limited. All rights reserved.
 //
 
 import UIKit
 
-public protocol StackableItem: StackableProtocol {
+public protocol StackableItemProtocol: UIView {
     func heightForWidth(_ width: CGFloat) -> CGFloat
 }

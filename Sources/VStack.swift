@@ -1,85 +1,162 @@
-//  Copyright © 2016 SEEK. All rights reserved.
+//  Copyright © 2021 SEEK Limited. All rights reserved.
 //
 
 import UIKit
 
-open class VStack: Stack {
-    public let thingsToStack: [StackableProtocol]
+open class VStack: UIView, StackableItemProtocol {
+    public enum Alignment {
+        case leading
+        case center
+        case trailing
+        case fill
+    }
+
     public let spacing: CGFloat
-    public let layoutMargins: UIEdgeInsets
-    public let width: CGFloat?
+    public let alignment: Alignment
+    public let children: [StackableItemProtocol]
+
+    private(set) var observations: [NSKeyValueObservation] = []
 
     public init(
-        spacing: CGFloat = 0.0,
+        spacing: CGFloat = 0,
         layoutMargins: UIEdgeInsets = .zero,
-        thingsToStack: [StackableProtocol],
-        width: CGFloat? = nil
+        alignment: Alignment = .fill,
+        children: [StackableItemProtocol]
     ) {
         self.spacing = spacing
+        self.alignment = alignment
+        self.children = children
+
+        super.init(frame: .zero)
+
         self.layoutMargins = layoutMargins
-        self.thingsToStack = thingsToStack
-        self.width = width
-    }
 
-    public convenience init(
-        spacing: CGFloat = 0.0,
-        layoutMargins: UIEdgeInsets = .zero,
-        width: CGFloat? = nil,
-        thingsToStack: () -> [StackableProtocol]
-    ) {
-        self.init(
-            spacing: spacing,
-            layoutMargins: layoutMargins,
-            thingsToStack: thingsToStack(),
-            width: width
-        )
-    }
-
-    open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
-        var origin = origin
-        var width = width
-        if layoutMargins != .zero {
-            origin.x += layoutMargins.left
-            origin.y += layoutMargins.top
-            width -= (layoutMargins.left + layoutMargins.right)
-        }
-        var frames: [CGRect] = []
-        var y: CGFloat = origin.y
-        self.visibleThingsToStack()
-            .forEach { stackable in
-                if let stack = stackable as? Stack {
-                    let innerFrames = stack.framesForLayout(
-                        width,
-                        origin: CGPoint(x: origin.x, y: y)
-                    )
-                    frames.append(contentsOf: innerFrames)
-                    y = frames.maxY + stack.layoutMargins.bottom
-                } else if let item = stackable as? StackableItem {
-                    let itemHeight = item.heightForWidth(width)
-                    let itemWidth = min(width, item.intrinsicContentSize.width)
-                    let frame = CGRect(x: origin.x, y: y, width: itemWidth, height: itemHeight)
-                    frames.append(frame)
-                    y += itemHeight
-                }
-                y += self.spacing
+        observations = children.map {
+            ($0 as UIView).observe(\.isHidden, options: [.new]) { [weak self] _, _ in
+                self?.invalidateIntrinsicContentSize()
+                self?.setNeedsLayout()
             }
-        return frames
+        }
+
+        children.forEach {
+            addSubview($0)
+        }
     }
 
-    public var intrinsicContentSize: CGSize {
-        let items = visibleThingsToStack()
+    public required init?(
+        coder: NSCoder
+    ) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
-        guard !items.isEmpty else { return .zero }
+    open override var intrinsicContentSize: CGSize {
+        let children = visibleChildren()
 
-        let intrinsicWidth = items.reduce(0, { max($0, $1.intrinsicContentSize.width) })
+        guard !children.isEmpty else { return .zero }
 
-        let totalHeightOfItems = items.reduce(0, { $0 + $1.intrinsicContentSize.height })
-        let totalVerticalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
-        let intrinsicHeight = totalHeightOfItems + totalVerticalSpacing
+        let childHasNoIntrinsicWidth = children.contains(
+            where: { $0.intrinsicContentSize.width.isNoIntrinsicMetric }
+        )
+        let childHasNoIntrinsicHeight = children.contains(
+            where: { $0.intrinsicContentSize.height.isNoIntrinsicMetric }
+        )
+
+        let intrinsicWidth: CGFloat
+        if childHasNoIntrinsicWidth {
+            intrinsicWidth = UIView.noIntrinsicMetric
+        } else {
+            intrinsicWidth = children.reduce(0) {
+                max($0, $1.intrinsicContentSize.width)
+            }
+        }
+
+        let intrinsicHeight: CGFloat
+        if childHasNoIntrinsicHeight {
+            intrinsicHeight = UIView.noIntrinsicMetric
+        } else {
+            let totalHeightOfItems = children.reduce(0) {
+                $0 + $1.intrinsicContentSize.height
+            }
+            let totalVerticalSpacing = max(CGFloat(children.count) - 1, 0) * spacing
+            intrinsicHeight = totalHeightOfItems + totalVerticalSpacing
+        }
 
         return CGSize(
             width: intrinsicWidth + layoutMargins.horizontalInsets,
             height: intrinsicHeight + layoutMargins.verticalInsets
         )
+    }
+
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+
+        let x = bounds.origin.x + layoutMargins.left
+        var y = bounds.origin.y + layoutMargins.top
+        let width = bounds.width - layoutMargins.left - layoutMargins.right
+
+        visibleChildren().forEach { child in
+            let height = child.heightForWidth(width)
+            let intrinsicWidth = child.intrinsicContentSize.width
+
+            let idealWidth: CGFloat
+            if intrinsicWidth == UIView.noIntrinsicMetric {
+                idealWidth = width
+            } else {
+                idealWidth = min(
+                    width,
+                    intrinsicWidth
+                )
+            }
+
+            let frame = CGRect(
+                x: x,
+                y: y,
+                width: width,
+                height: height
+            )
+
+            switch alignment {
+            case .leading:
+                child.frame = frame.bySetting(
+                    width: idealWidth,
+                    anchoredTo: .leading
+                )
+            case .center:
+                child.frame = frame.bySetting(
+                    width: idealWidth,
+                    anchoredTo: .center
+                )
+            case .trailing:
+                child.frame = frame.bySetting(
+                    width: idealWidth,
+                    anchoredTo: .trailing
+                )
+            case .fill:
+                child.frame = frame
+            }
+
+            y += height + spacing
+        }
+
+        frame.size.height = y - spacing + layoutMargins.bottom
+    }
+
+    public func heightForWidth(_ width: CGFloat) -> CGFloat {
+        let children = visibleChildren()
+
+        let totalVerticalSpacing = max(CGFloat(children.count) - 1, 0) * spacing
+        let totalHeightOfItems = children.reduce(0) {
+            $0 + $1.heightForWidth(width)
+        }
+
+        return totalHeightOfItems + totalVerticalSpacing + layoutMargins.verticalInsets
+    }
+
+    // MARK: - helpers
+
+    private func visibleChildren() -> [StackableItemProtocol] {
+        return children.filter {
+            !$0.isHidden
+        }
     }
 }
