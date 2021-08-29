@@ -78,8 +78,8 @@ open class OldVStack: OldStack {
         let intrinsicHeight = totalHeightOfItems + totalVerticalSpacing
 
         return CGSize(
-            width: intrinsicWidth + layoutMargins.horizontalInsets,
-            height: intrinsicHeight + layoutMargins.verticalInsets
+            width: intrinsicWidth + layoutMargins.horizontal,
+            height: intrinsicHeight + layoutMargins.vertical
         )
     }
 }

@@ -82,8 +82,8 @@ open class VStack: UIView, StackableItemProtocol {
         }
 
         return CGSize(
-            width: intrinsicWidth + layoutMargins.horizontalInsets,
-            height: intrinsicHeight + layoutMargins.verticalInsets
+            width: intrinsicWidth + layoutMargins.horizontal,
+            height: intrinsicHeight + layoutMargins.vertical
         )
     }
 
@@ -149,7 +149,7 @@ open class VStack: UIView, StackableItemProtocol {
             $0 + $1.heightForWidth(width)
         }
 
-        return totalHeightOfItems + totalVerticalSpacing + layoutMargins.verticalInsets
+        return totalHeightOfItems + totalVerticalSpacing + layoutMargins.vertical
     }
 
     // MARK: - helpers

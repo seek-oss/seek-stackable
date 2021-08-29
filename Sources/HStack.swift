@@ -85,8 +85,8 @@ open class HStack: UIView, StackableItemProtocol {
         }
 
         return CGSize(
-            width: intrinsicWidth + layoutMargins.horizontalInsets,
-            height: intrinsicHeight + layoutMargins.verticalInsets
+            width: intrinsicWidth + layoutMargins.horizontal,
+            height: intrinsicHeight + layoutMargins.vertical
         )
     }
 
@@ -285,7 +285,7 @@ open class HStack: UIView, StackableItemProtocol {
     ) -> CGFloat {
         items.reduce(0) { result, item in
             max(result, item.height)
-        }
+        } + layoutMargins.vertical
     }
 
     private func sortedByContentHuggingPriority(

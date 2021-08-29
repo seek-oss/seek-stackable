@@ -90,8 +90,8 @@ open class OldHStack: OldStack {
         let intrinsicHeight = items.reduce(0, { max($0, $1.intrinsicContentSize.height) })
 
         return CGSize(
-            width: intrinsicWidth + layoutMargins.horizontalInsets,
-            height: intrinsicHeight + layoutMargins.verticalInsets
+            width: intrinsicWidth + layoutMargins.horizontal,
+            height: intrinsicHeight + layoutMargins.vertical
         )
     }
 
@@ -119,7 +119,7 @@ open class OldHStack: OldStack {
         let totalFixedWidth = fixedWidths.reduce(0.0, +)
         let totalNonFixedWidth =
             width
-            - layoutMargins.horizontalInsets
+            - layoutMargins.horizontal
             - totalFixedWidth
             - (((CGFloat(thingsToStack.count) - 1) * spacing))
         let numberOfStackablesWithNonFixedWidth = thingsToStack.count - fixedWidths.count
