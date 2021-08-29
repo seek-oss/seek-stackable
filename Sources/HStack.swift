@@ -149,7 +149,7 @@ open class HStack: UIView, StackableItemProtocol {
             x += item.width + spacing
         }
 
-        frame.size.height = totalHeight
+        frame.size.height = totalHeight + layoutMargins.vertical
     }
 
     public func heightForWidth(
@@ -174,7 +174,7 @@ open class HStack: UIView, StackableItemProtocol {
         )
         return height(
             from: items
-        )
+        ) + layoutMargins.vertical
     }
 
     // MARK: - helpers
@@ -285,7 +285,7 @@ open class HStack: UIView, StackableItemProtocol {
     ) -> CGFloat {
         items.reduce(0) { result, item in
             max(result, item.height)
-        } + layoutMargins.vertical
+        }
     }
 
     private func sortedByContentHuggingPriority(
