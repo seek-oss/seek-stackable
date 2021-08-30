@@ -1,7 +1,6 @@
 //  Copyright © 2021 SEEK Limited. All rights reserved.
 //
 
-import Algorithms
 import UIKit
 
 open class HStack: UIView, StackableItemProtocol {
@@ -94,6 +93,14 @@ open class HStack: UIView, StackableItemProtocol {
         super.layoutSubviews()
 
         let visibleChildren = visibleChildren()
+
+        guard bounds != .zero
+        else {
+            visibleChildren.forEach {
+                $0.frame = .zero
+            }
+            return
+        }
 
         var x = bounds.origin.x + layoutMargins.left
         let y = bounds.origin.y + layoutMargins.top

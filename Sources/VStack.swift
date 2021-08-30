@@ -90,11 +90,21 @@ open class VStack: UIView, StackableItemProtocol {
     open override func layoutSubviews() {
         super.layoutSubviews()
 
+        let visibleChildren = visibleChildren()
+
+        guard bounds != .zero
+        else {
+            visibleChildren.forEach {
+                $0.frame = .zero
+            }
+            return
+        }
+
         let x = bounds.origin.x + layoutMargins.left
         var y = bounds.origin.y + layoutMargins.top
         let width = bounds.width - layoutMargins.left - layoutMargins.right
 
-        visibleChildren().forEach { child in
+        visibleChildren.forEach { child in
             let height = child.heightForWidth(width)
             let intrinsicWidth = child.intrinsicContentSize.width
 

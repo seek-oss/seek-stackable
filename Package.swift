@@ -14,23 +14,11 @@ let package = Package(
             targets: ["Stackable"]
         )
     ],
-    dependencies: [
-        .package(
-            url: "https://github.com/apple/swift-collections",
-            from: "0.0.1"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-algorithms",
-            from: "0.1.0"
-        ),
-    ],
+    dependencies: [],
     targets: [
         .target(
             name: "Stackable",
-            dependencies: [
-                .product(name: "OrderedCollections", package: "swift-collections"),
-                .product(name: "Algorithms", package: "swift-algorithms"),
-            ],
+            dependencies: [],
             path: "Sources"
         ),
         .testTarget(
