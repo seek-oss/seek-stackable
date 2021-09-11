@@ -164,7 +164,7 @@ class OldVStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.width, size3.width)
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
-    
+
     func test_framesForLayout_with_layoutMargins_should_return_frames_for_nested_OldHStack() {
         let spacing: CGFloat = 2
         let view1 = UIView()

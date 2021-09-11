@@ -166,7 +166,7 @@ class OldHStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.width, size3.width)
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
-    
+
     func test_framesForLayout_should_return_frames_for_nested_OldVStack_with_layoutMargins() {
         let spacing: CGFloat = 2
         let spacing2: CGFloat = 1
@@ -261,7 +261,7 @@ class OldHStackTests: XCTestCase {
 
         XCTAssertEqual(stack.intrinsicContentSize, CGSize(width: 305, height: 100))
     }
-    
+
     func test_intrinsicContentSize_with_layoutMargins_should_return_correct_size() {
         let stack = OldHStack(
             spacing: 5,

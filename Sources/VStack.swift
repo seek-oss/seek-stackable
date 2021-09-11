@@ -54,19 +54,21 @@ open class VStack: UIView, StackableItemProtocol {
 
         guard !children.isEmpty else { return .zero }
 
-        let childHasNoIntrinsicWidth = children.contains(
-            where: { $0.intrinsicContentSize.width.isNoIntrinsicMetric }
+        let intrinsicSizes = children.map { $0.intrinsicContentSize }
+
+        let childHasNoIntrinsicWidth = intrinsicSizes.contains(
+            where: { $0.width.isNoIntrinsicMetric }
         )
-        let childHasNoIntrinsicHeight = children.contains(
-            where: { $0.intrinsicContentSize.height.isNoIntrinsicMetric }
+        let childHasNoIntrinsicHeight = intrinsicSizes.contains(
+            where: { $0.height.isNoIntrinsicMetric }
         )
 
         let intrinsicWidth: CGFloat
         if childHasNoIntrinsicWidth {
             intrinsicWidth = UIView.noIntrinsicMetric
         } else {
-            intrinsicWidth = children.reduce(0) {
-                max($0, $1.intrinsicContentSize.width)
+            intrinsicWidth = intrinsicSizes.reduce(0) {
+                max($0, $1.width)
             }
         }
 
@@ -74,8 +76,8 @@ open class VStack: UIView, StackableItemProtocol {
         if childHasNoIntrinsicHeight {
             intrinsicHeight = UIView.noIntrinsicMetric
         } else {
-            let totalHeightOfItems = children.reduce(0) {
-                $0 + $1.intrinsicContentSize.height
+            let totalHeightOfItems = intrinsicSizes.reduce(0) {
+                $0 + $1.height
             }
             let totalVerticalSpacing = max(CGFloat(children.count) - 1, 0) * spacing
             intrinsicHeight = totalHeightOfItems + totalVerticalSpacing
@@ -147,8 +149,6 @@ open class VStack: UIView, StackableItemProtocol {
 
             y += height + spacing
         }
-
-        frame.size.height = y - spacing + layoutMargins.bottom
     }
 
     public func heightForWidth(_ width: CGFloat) -> CGFloat {

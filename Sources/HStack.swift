@@ -155,14 +155,13 @@ open class HStack: UIView, StackableItemProtocol {
 
             x += item.width + spacing
         }
-
-        frame.size.height = totalHeight + layoutMargins.vertical
     }
 
     public func heightForWidth(
         _ width: CGFloat
     ) -> CGFloat {
         let visibleChildren = visibleChildren()
+
         let contentWidth = width - layoutMargins.left - layoutMargins.right
         let totalSpacing = max(
             spacing * CGFloat(visibleChildren.count - 1),
@@ -179,6 +178,7 @@ open class HStack: UIView, StackableItemProtocol {
             for: infos,
             in: totalItemWidth
         )
+
         return height(
             from: items
         ) + layoutMargins.vertical
