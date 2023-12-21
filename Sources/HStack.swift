@@ -4,21 +4,40 @@
 import UIKit
 
 open class HStack: Stack {
+    public enum Distribution: Equatable {
+        case fillEqually
+        case fillUsingIntrinsicContentSize
+    }
     public let thingsToStack: [Stackable]
     public let spacing: CGFloat
     public let layoutMargins: UIEdgeInsets
     public let width: CGFloat?
+    public let distribution: Distribution
     
-    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable], width: CGFloat? = nil) {
+    public init(
+        spacing: CGFloat = 0.0,
+        distribution: Distribution = .fillEqually,
+        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
+        thingsToStack: [Stackable],
+        width: CGFloat? = nil
+    ) {
         self.spacing = spacing
         self.layoutMargins = layoutMargins
         self.thingsToStack = thingsToStack
         self.width = width
+        self.distribution = distribution
     }
     
-    public convenience init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, width: CGFloat? = nil, thingsToStack: () -> [Stackable]) {
+    public convenience init(
+        spacing: CGFloat = 0.0,
+        distribution: Distribution = .fillEqually,
+        layoutMargins: UIEdgeInsets = UIEdgeInsets.zero,
+        width: CGFloat? = nil,
+        thingsToStack: () -> [Stackable]
+    ) {
         self.init(
             spacing: spacing,
+            distribution: distribution,
             layoutMargins: layoutMargins,
             thingsToStack: thingsToStack(),
             width: width
@@ -41,6 +60,11 @@ open class HStack: Stack {
                 stackableWidth = fixedSizeStackable.size.width
             } else if let fixedSizeStack = stackable as? Stack, let stackWidth = fixedSizeStack.width {
                 stackableWidth = stackWidth
+            } else if let item = stackable as? StackableItem, distribution == .fillUsingIntrinsicContentSize {
+                stackableWidth = min(
+                    item.intrinsicContentSize.width,
+                    (width - x)
+                )
             } else {
                 stackableWidth = nonFixedWidth
             }

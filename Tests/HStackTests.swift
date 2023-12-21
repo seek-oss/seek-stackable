@@ -6,6 +6,83 @@ import Foundation
 import XCTest
 
 class HStackTests: XCTestCase {
+    func test_init_should_set_default_properties() {
+        let stack = HStack(
+            thingsToStack: []
+        )
+        
+        XCTAssertEqual(
+            stack.spacing,
+            0.0
+        )
+        XCTAssertEqual(
+            stack.distribution,
+            .fillEqually
+        )
+        XCTAssertEqual(
+            stack.layoutMargins,
+            .zero
+        )
+        XCTAssertEqual(
+            stack.thingsToStack.count,
+            0
+        )
+        XCTAssertNil(
+            stack.width
+        )
+    }
+    
+    func test_convenience_init_should_set_default_properties() {
+        let stack = HStack {
+            []
+        }
+        
+        XCTAssertEqual(
+            stack.spacing,
+            0.0
+        )
+        XCTAssertEqual(
+            stack.distribution,
+            .fillEqually
+        )
+        XCTAssertEqual(
+            stack.layoutMargins,
+            .zero
+        )
+        XCTAssertEqual(
+            stack.thingsToStack.count,
+            0
+        )
+        XCTAssertNil(
+            stack.width
+        )
+    }
+    
+    func test_convenience_init_with_thingsToStack_closure() {
+        let layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        let spacing: CGFloat = 2
+        let view1 = UILabel()
+        let view2 = UILabel()
+        
+        let stack = HStack(
+            spacing: spacing,
+            layoutMargins: layoutMargins,
+            width: 200
+        ) {[
+            view1,
+            view2
+        ]}
+        
+        XCTAssertEqual(stack.spacing, 2)
+        XCTAssertEqual(stack.layoutMargins, layoutMargins)
+        XCTAssertEqual(stack.width, 200)
+        XCTAssertEqual(stack.thingsToStack.count, 2)
+        XCTAssertEqual(stack.thingsToStack as? [UILabel], [
+            view1,
+            view2
+        ])
+    }
+    
     func test_framesForLayout_should_return_spaced_frames() {
         let spacing: CGFloat = 2
         let view1 = UIView()
@@ -146,29 +223,79 @@ class HStackTests: XCTestCase {
         XCTAssertEqual(frames[2].size.height, size3.height)
     }
     
-    func test_convenience_init_with_thingsToStack_closure() {
-        let layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        let spacing: CGFloat = 2
-        let view1 = UILabel()
-        let view2 = UILabel()
-        
+    func test_framesForLayout_when_distribution_fillUsingIntrinsicContentSize_should_return_frames() {
+        let view1 = StackableItemView(
+            frame: .init(
+                origin: .zero,
+                size: CGSize(
+                    width: 100,
+                    height: 10
+                )
+            )
+        )
+        let view2 = StackableItemView(
+            frame: .init(
+                origin: .zero,
+                size: CGSize(
+                    width: 100,
+                    height: 20
+                )
+            )
+        )
+        let view3 = StackableItemView(
+            frame: .init(
+                origin: .zero,
+                size: CGSize(
+                    width: 200,
+                    height: 20
+                )
+            )
+        )
         let stack = HStack(
-            spacing: spacing,
-            layoutMargins: layoutMargins,
-            width: 200
-        ) {[
-            view1,
-            view2
-        ]}
+            spacing: 5,
+            distribution: .fillUsingIntrinsicContentSize
+        ) {
+            [
+                view1,
+                view2,
+                view3
+            ]
+        }
         
-        XCTAssertEqual(stack.spacing, 2)
-        XCTAssertEqual(stack.layoutMargins, layoutMargins)
-        XCTAssertEqual(stack.width, 200)
-        XCTAssertEqual(stack.thingsToStack.count, 2)
-        XCTAssertEqual(stack.thingsToStack as? [UILabel], [
-            view1,
-            view2
-        ])
+        let frames = stack.framesForLayout(300)
+        
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 100,
+                        height: 10
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 105,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 100,
+                        height: 10
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 210,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 90,
+                        height: 10
+                    )
+                )
+            ]
+        )
     }
     
     func test_intrinsicContentSize_should_return_correct_size() {
@@ -192,5 +319,15 @@ class HStackTests: XCTestCase {
         ])
         
         XCTAssertEqual(stack.intrinsicContentSize, .zero)
+    }
+    
+    private class StackableItemView: UIView, StackableItem {
+        override var intrinsicContentSize: CGSize {
+            frame.size
+        }
+        
+        func heightForWidth(_ width: CGFloat) -> CGFloat {
+            10
+        }
     }
 }
