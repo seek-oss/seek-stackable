@@ -3,7 +3,7 @@
 
 import UIKit
 
-public protocol Stack: class, Stackable {
+public protocol Stack: AnyObject, Stackable {
     var thingsToStack: [Stackable] { get }
     var spacing: CGFloat { get }
     var layoutMargins: UIEdgeInsets { get }

@@ -2,8 +2,8 @@
 //
 
 import Foundation
-@testable import stackable
 import XCTest
+@testable import Stackable
 
 class FixedSizeStackableTests: XCTestCase {
     func test_view_should_return_expected() {

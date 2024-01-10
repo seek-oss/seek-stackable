@@ -1,9 +1,9 @@
 //  Copyright © 2016 SEEK Limited. All rights reserved.
 //
 
-import UIKit
-@testable import stackable
+import Foundation
 import XCTest
+@testable import Stackable
 
 class UILabel_heightForWidth_Tests: XCTestCase {
     func test_heightForWidth_should_return_expected_result() {

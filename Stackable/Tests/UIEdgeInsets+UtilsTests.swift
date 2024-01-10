@@ -1,8 +1,9 @@
 //  Copyright © 2020 SEEK. All rights reserved.
 //
 
+import Foundation
 import XCTest
-@testable import stackable
+@testable import Stackable
 
 class UIEdgeInsets_UtilsTests: XCTestCase {
     
