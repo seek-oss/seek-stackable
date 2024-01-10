@@ -1,13 +1,10 @@
 //  Copyright © 2024 SEEK. All rights reserved.
 //
 
-open class FlowLayoutStack: Stack {
-    public var thingsToStack: [Stackable]
-    public var spacing: CGFloat
-    public var lineSpacing: CGFloat
-    // layoutMargins have not yet been implemented
-    public var layoutMargins: UIEdgeInsets = .zero
-    public var width: CGFloat?
+import UIKit
+
+open class FlowLayoutStack: HStack {
+    let lineSpacing: CGFloat
     private var itemSpacing: CGFloat {
         spacing
     }
@@ -18,11 +15,14 @@ open class FlowLayoutStack: Stack {
         width: CGFloat? = nil,
         thingsToStack: [Stackable]
     ) {
-        self.spacing = itemSpacing
         self.lineSpacing = lineSpacing
-        self.layoutMargins = .zero
-        self.width = width
-        self.thingsToStack = thingsToStack
+        
+        super.init(
+            spacing: itemSpacing,
+            layoutMargins: .zero,
+            thingsToStack: thingsToStack,
+            width: width
+        )
     }
     
     public convenience init(
@@ -39,7 +39,7 @@ open class FlowLayoutStack: Stack {
         )
     }
     
-    open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
+    open override func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         var frames: [CGRect] = []
         var currentY = origin.y
         var currentX = origin.x
@@ -102,21 +102,5 @@ open class FlowLayoutStack: Stack {
         } else {
            stackable.intrinsicContentSize.width
         }
-    }
-    
-    public var intrinsicContentSize: CGSize {
-        let items = visibleThingsToStack()
-        
-        guard !items.isEmpty else { return .zero }
-        
-        // width
-        let totalWidthOfItems = items.reduce(0, { $0 + $1.intrinsicContentSize.width })
-        let totalHorizontalSpacing = max(CGFloat(items.count) - 1, 0) * spacing
-        let intrinsicWidth = totalWidthOfItems + totalHorizontalSpacing
-        
-        // height
-        let intrinsicHeight = items.reduce(0, { max($0, $1.intrinsicContentSize.height) })
-        
-        return CGSize(width: intrinsicWidth, height: intrinsicHeight)
     }
 }

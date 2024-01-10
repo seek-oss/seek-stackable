@@ -1,6 +1,7 @@
 //  Copyright © 2020 SEEK. All rights reserved.
 //
 
+import Foundation
 import XCTest
 @testable import stackable
 

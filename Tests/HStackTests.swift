@@ -2,8 +2,8 @@
 //
 
 import Foundation
-@testable import stackable
 import XCTest
+@testable import stackable
 
 class HStackTests: XCTestCase {
     func test_framesForLayout_should_return_spaced_frames() {

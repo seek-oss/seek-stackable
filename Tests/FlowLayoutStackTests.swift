@@ -2,8 +2,8 @@
 //
 
 import Foundation
-@testable import stackable
 import XCTest
+@testable import stackable
 
 class FlowLayoutStackTests: XCTestCase {
     func test_init_should_set_default_properties() {
@@ -295,58 +295,6 @@ class FlowLayoutStackTests: XCTestCase {
                     )
                 ),
             ]
-        )
-    }
-
-    func test_intrinsicContentSize_should_return_correct_size() {
-        let stack = FlowLayoutStack(
-            itemSpacing: 5
-        ) {
-            [
-                UIView().fixed(
-                    width: 100,
-                    height: 100
-                ),
-                UIView().fixed(
-                    width: 200,
-                    height: 50
-                )
-            ]
-        }
-
-        XCTAssertEqual(
-            stack.intrinsicContentSize,
-            .init(
-                width: 305,
-                height: 100
-            )
-        )
-    }
-
-    func test_intrinsicContentSize_should_return_zero_when_items_are_hidden() {
-        let view1 = UIView()
-        view1.isHidden = true
-        let view2 = UIView()
-        view2.isHidden = true
-
-        let stack = FlowLayoutStack(
-            itemSpacing: 5
-        ) {
-            [
-                view1.fixed(
-                    width: 100,
-                    height: 100
-                ),
-                view2.fixed(
-                    width: 200,
-                    height: 50
-                )
-            ]
-        }
-
-        XCTAssertEqual(
-            stack.intrinsicContentSize,
-            .zero
         )
     }
     

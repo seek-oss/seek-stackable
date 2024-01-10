@@ -1,7 +1,7 @@
 //  Copyright © 2016 SEEK Limited. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
 @testable import stackable
 

@@ -2,8 +2,8 @@
 //
 
 import Foundation
-@testable import stackable
 import XCTest
+@testable import stackable
 
 class FrameArray_maxY_Tests: XCTestCase {
     func test_maxY_should_return_maxY_of_lowest_frame() {
