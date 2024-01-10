@@ -3,7 +3,7 @@
 
 import Foundation
 import XCTest
-@testable import stackable
+@testable import Stackable
 
 class UILabel_heightForWidth_Tests: XCTestCase {
     func test_heightForWidth_should_return_expected_result() {

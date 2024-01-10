@@ -3,7 +3,7 @@
 
 import Foundation
 import XCTest
-@testable import stackable
+@testable import Stackable
 
 class FlowLayoutStackTests: XCTestCase {
     func test_init_should_set_default_properties() {
