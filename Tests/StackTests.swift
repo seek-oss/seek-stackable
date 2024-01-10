@@ -1,9 +1,9 @@
 //  Copyright © 2016 SEEK Limited. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
-@testable import stackable
+@testable import Stackable
 
 class StackTests: XCTestCase {
     func test_hidden_for_all_hidden_should_return_true() {
