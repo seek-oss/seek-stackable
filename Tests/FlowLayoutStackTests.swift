@@ -298,6 +298,53 @@ class FlowLayoutStackTests: XCTestCase {
         )
     }
     
+    func test_framesForLayout_when_thingsToStack_contains_a_single_stackable_that_exceeds_the_width_having_existing_origin_should_return_expected() {
+        let stack = FlowLayoutStack(
+            itemSpacing: 5,
+            lineSpacing: 10
+        ) {
+            [
+                HStack(
+                    thingsToStack: [
+                        StackableItemView(
+                            frame: .init(
+                                origin: .zero,
+                                size: CGSize(
+                                    width: 300,
+                                    height: 10
+                                )
+                            )
+                        )
+                    ]
+                )
+            ]
+        }
+
+        let frames = stack.framesForLayout(
+            100,
+            origin: .init(
+                x: 0,
+                y: 40
+            )
+        )
+
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .init(
+                        x: 0,
+                        y: 40
+                    ),
+                    size: .init(
+                        width: 100,
+                        height: 10
+                    )
+                ),
+            ]
+        )
+    }
+
     private class StackableItemView: UIView, StackableItem {
         override var intrinsicContentSize: CGSize {
             frame.size

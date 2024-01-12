@@ -44,7 +44,11 @@ open class FlowLayoutStack: HStack {
         var currentY = origin.y
         var currentX = origin.x
 
-        func moveToNextRow() {
+        func moveToNextRowIfRequired() {
+            guard frames.count > 0 else {
+                return
+            }
+
             currentX = 0
             currentY = frames.reduce(0) { result, rect in
                 max(
@@ -61,7 +65,7 @@ open class FlowLayoutStack: HStack {
             )
                             
             if currentX + stackableWidth > width {
-                moveToNextRow()
+                moveToNextRowIfRequired()
             }
             
             if let stack = stackable as? Stack {
