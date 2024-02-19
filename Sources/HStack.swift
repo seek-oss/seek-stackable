@@ -4,21 +4,40 @@
 import UIKit
 
 open class HStack: Stack {
-    public let thingsToStack: [Stackable]
+    public enum Distribution: Equatable {
+        case fillEqually
+        case fill
+    }
     public let spacing: CGFloat
+    public let distribution: Distribution
     public let layoutMargins: UIEdgeInsets
+    public let thingsToStack: [Stackable]
     public let width: CGFloat?
-    
-    public init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, thingsToStack: [Stackable], width: CGFloat? = nil) {
+
+    public init(
+        spacing: CGFloat = 0.0,
+        distribution: Distribution = .fillEqually,
+        layoutMargins: UIEdgeInsets = .zero,
+        thingsToStack: [Stackable],
+        width: CGFloat? = nil
+    ) {
         self.spacing = spacing
+        self.distribution = distribution
         self.layoutMargins = layoutMargins
         self.thingsToStack = thingsToStack
         self.width = width
     }
     
-    public convenience init(spacing: CGFloat = 0.0, layoutMargins: UIEdgeInsets = UIEdgeInsets.zero, width: CGFloat? = nil, thingsToStack: () -> [Stackable]) {
+    public convenience init(
+        spacing: CGFloat = 0.0,
+        distribution: Distribution = .fillEqually,
+        layoutMargins: UIEdgeInsets = .zero,
+        width: CGFloat? = nil,
+        thingsToStack: () -> [Stackable]
+    ) {
         self.init(
             spacing: spacing,
+            distribution: distribution,
             layoutMargins: layoutMargins,
             thingsToStack: thingsToStack(),
             width: width
@@ -27,36 +46,40 @@ open class HStack: Stack {
     
     open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         // TODO: add adjustments for layoutMargins (not currently needed so okay to defer)
-        
-        let thingsToStack = self.visibleThingsToStack()
+
         var frames: [CGRect] = []
+        var currentX = origin.x
+        let currentY = origin.y
         
-        var x = origin.x
-        let y = origin.y
-        let nonFixedWidth = self.widthForNonFixedSizeStackables(width, thingsToStack: thingsToStack)
-        
-        thingsToStack.forEach { stackable in
-            let stackableWidth: CGFloat
-            if let fixedSizeStackable = stackable as? FixedSizeStackable {
-                stackableWidth = fixedSizeStackable.size.width
-            } else if let fixedSizeStack = stackable as? Stack, let stackWidth = fixedSizeStack.width {
-                stackableWidth = stackWidth
-            } else {
-                stackableWidth = nonFixedWidth
-            }
+        for stackable in visibleThingsToStack() {
+            let stackableWidth = getWidth(
+                for: stackable,
+                width: width,
+                currentX: currentX
+            )
             
             if let stack = stackable as? Stack {
-                let innerFrames = stack.framesForLayout(stackableWidth, origin: CGPoint(x: x, y: origin.y))
-                frames.append(contentsOf: innerFrames)
-                x += stackableWidth
+                frames.append(
+                    contentsOf: stack.framesForLayout(
+                        stackableWidth,
+                        origin: CGPoint(
+                            x: currentX,
+                            y: currentY
+                        )
+                    )
+                )
             } else if let item = stackable as? StackableItem {
-                let stackableHeight = item.heightForWidth(stackableWidth)
-                let frame = CGRect(x: x, y: y, width: stackableWidth, height: stackableHeight)
-                frames.append(frame)
-                x += stackableWidth
+                frames.append(
+                    .init(
+                        x: currentX,
+                        y: currentY,
+                        width: stackableWidth,
+                        height: item.heightForWidth(stackableWidth)
+                    )
+                )
             }
             
-            x += self.spacing
+            currentX += stackableWidth + spacing
         }
         
         return frames
@@ -82,6 +105,37 @@ open class HStack: Stack {
     
     // MARK: helpers
     
+    private func getWidth(
+        for stackable: Stackable,
+        width: CGFloat,
+        currentX: Double
+    ) -> CGFloat {
+        let thingsToStack = visibleThingsToStack()
+        
+        if let fixedSizeStackable = stackable as? FixedSizeStackable {
+            return fixedSizeStackable.size.width
+        } else if let stack = stackable as? Stack, let fixedSizeStackWidth = stack.width {
+            return fixedSizeStackWidth
+        } else if stackable as? Stack !== nil, distribution == .fill {
+            return width
+        } 
+        else if let item = stackable as? StackableItem, distribution == .fill {
+            let itemWidth = item.intrinsicContentSize.width
+            let widthBalance = width - currentX
+
+            if widthBalance > 0 {
+                return itemWidth <= widthBalance ? itemWidth : widthBalance
+            } else {
+                return 0
+            }
+        } else {
+            return widthForNonFixedSizeStackables(
+                width,
+                thingsToStack: thingsToStack
+            )
+        }
+    }
+
     private  func widthForNonFixedSizeStackables(_ width: CGFloat, thingsToStack: [Stackable]) -> CGFloat {
         let fixedWidths = thingsToStack
             .filter {
@@ -100,6 +154,6 @@ open class HStack: Stack {
         let totalFixedWidth = fixedWidths.reduce(0.0, +)
         let totalNonFixedWidth = width - totalFixedWidth - (((CGFloat(thingsToStack.count) - 1) * self.spacing))
         let numberOfStackablesWithNonFixedWidth = thingsToStack.count - fixedWidths.count
-        return  floor(totalNonFixedWidth / CGFloat(numberOfStackablesWithNonFixedWidth))
+        return floor(totalNonFixedWidth / CGFloat(numberOfStackablesWithNonFixedWidth))
     }
 }
