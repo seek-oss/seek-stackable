@@ -114,19 +114,19 @@ open class HStack: Stack {
         
         if let fixedSizeStackable = stackable as? FixedSizeStackable {
             return fixedSizeStackable.size.width
-        } else if let fixedSizeStack = stackable as? Stack, let stackWidth = fixedSizeStack.width {
-            return  stackWidth
-        } else if let item = stackable as? StackableItem, distribution == .fill {
+        } else if let stack = stackable as? Stack, let fixedSizeStackWidth = stack.width {
+            return fixedSizeStackWidth
+        } else if stackable as? Stack !== nil, distribution == .fill {
+            return width
+        } 
+        else if let item = stackable as? StackableItem, distribution == .fill {
             let itemWidth = item.intrinsicContentSize.width
-            let widthBalance = max(
-                width - currentX,
-                width - (currentX - width)
-            )
-            
-            if widthBalance <= 0 {
-                return 0
-            } else {
+            let widthBalance = width - currentX
+
+            if widthBalance > 0 {
                 return itemWidth <= widthBalance ? itemWidth : widthBalance
+            } else {
+                return 0
             }
         } else {
             return widthForNonFixedSizeStackables(
