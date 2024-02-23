@@ -112,57 +112,103 @@ open class HStack: Stack {
         currentX: Double,
         frames: [CGRect]
     ) -> CGFloat {
-        let thingsToStack = visibleThingsToStack()
-        
-        if let fixedSizeStackable = stackable as? FixedSizeStackable {
-            return fixedSizeStackable.size.width
-        } else if let stack = stackable as? Stack, let fixedSizeStackWidth = stack.width {
-            return fixedSizeStackWidth
-        } else if stackable as? Stack !== nil, distribution == .fill {
-            return width - currentX
+        switch distribution {
+        case .fill:
+            getWidthForDistributionFill(
+                for: stackable,
+                width: width,
+                currentX: currentX,
+                frames: frames
+            )
+        case .fillEqually:
+            getWidthForDistributionFillEqually(
+                for: stackable,
+                width: width
+            )
         }
-        else if let item = stackable as? StackableItem, distribution == .fill {
-            let firstItemXOffsetInCommonStack = if let firstFrame = frames.first {
-                firstFrame.origin.x
+    }
+
+    private func getWidthForDistributionFill(
+        for stackable: Stackable,
+        width: CGFloat,
+        currentX: Double,
+        frames: [CGRect]
+    ) -> CGFloat {
+        let existingItemXOffsetInCommonStack = if let firstFrame = frames.first {
+            firstFrame.origin.x
+        } else {
+           CGFloat(0)
+        }
+
+        // If we have no frames we want to treat the current
+        // x offset as being 0 so our calculations work when
+        // an item is nested in a stack and when it is not
+        //
+        // currentX is the calculation passed in that contains
+        // the width + any spacing that been configured
+        let currentXOffset = if frames.isEmpty {
+            CGFloat(0)
+        } else {
+            CGFloat(currentX)
+        }
+
+        // Calculate the relative X of the item positioned within the given width
+        let relativeXOffsetInStack = currentXOffset - existingItemXOffsetInCommonStack
+
+        if let fixedSizeStackable = stackable as? FixedSizeStackable {
+            let itemWidth = min(
+                fixedSizeStackable.size.width,
+                max(width - relativeXOffsetInStack, 0)
+            )
+
+            #if DEBUG
+                if itemWidth == 0 {
+                    print("\(fixedSizeStackable) - is dropped from layout as it doesn't fit!")
+                }
+            #endif
+
+            return itemWidth
+        } else if let stack = stackable as? Stack {
+            if let fixedSizeStackWidth = stack.width {
+                return fixedSizeStackWidth
             } else {
-               CGFloat(0)
+                return width - currentX
             }
-
-            // If we have no frames we want to treat the current
-            // x offset as being 0 so our calculations work when
-            // an item is nested in a stack and when it is not
-            //
-            // currentX is the calculation passed in that contains
-            // the width + any spacing having been configured
-            let currentXOffset = if frames.isEmpty {
-                CGFloat(0)
-            } else {
-                CGFloat(currentX)
-            }
-
-            // Calculate the relative X of the item positioned
-            // within the given width
-            let relativeXOffsetInStack = currentXOffset - firstItemXOffsetInCommonStack
-
+        }
+        else if let item = stackable as? StackableItem {
             let itemWidth = min(
                 item.intrinsicContentSize.width,
                 max(width - relativeXOffsetInStack, 0)
             )
 
-            if itemWidth == 0 {
-                // should think about logging an error
-                print("\(item) - is dropped from layout as it doesn't fit!")
-            }
+            #if DEBUG
+                if itemWidth == 0 {
+                    print("\(item) - is dropped from layout as it doesn't fit!")
+                }
+            #endif
 
             return itemWidth
         } else {
-            return widthForNonFixedSizeStackables(
+            return stackable.intrinsicContentSize.width
+        }
+    }
+    
+    private func getWidthForDistributionFillEqually(
+        for stackable: Stackable,
+        width: CGFloat
+    ) -> CGFloat {
+        return if let fixedSizeStackable = stackable as? FixedSizeStackable {
+            fixedSizeStackable.size.width
+        } else if let stack = stackable as? Stack, let fixedSizeStackWidth = stack.width {
+            fixedSizeStackWidth
+        } else {
+            widthForNonFixedSizeStackables(
                 width,
-                thingsToStack: thingsToStack
+                thingsToStack: visibleThingsToStack()
             )
         }
     }
-
+    
     private  func widthForNonFixedSizeStackables(_ width: CGFloat, thingsToStack: [Stackable]) -> CGFloat {
         let fixedWidths = thingsToStack
             .filter {
