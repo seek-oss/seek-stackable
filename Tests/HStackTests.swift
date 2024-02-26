@@ -119,7 +119,58 @@ final class HStackTests: XCTestCase {
         )
     }
     
-    func test_framesForLayout_should_return_expected_frames() {
+    func test_framesForLayout_should_return_frames_with_margins() {
+        let stack = HStack(
+            spacing: 2,
+            layoutMargins: .init(
+                top: 10,
+                left: 8,
+                bottom: 10,
+                right: 8
+            ),
+            thingsToStack: [
+                UIView().fixed(
+                    size: CGSize(
+                        width: 50,
+                        height: 10
+                    )
+                ),
+                UIView().fixed(
+                    size: CGSize(
+                        width: 55,
+                        height: 11
+                    )
+                )
+            ]
+        )
+        
+        let frames = stack.framesForLayout(200)
+        
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 50,
+                        height: 10
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 52,
+                        y: 0 // TODO: HStack is currently not respecting margins
+                    ),
+                    size: .init(
+                        width: 55,
+                        height: 11
+                    )
+                )
+            ]
+        )
+    }
+
+    func test_framesForLayout_when_distribution_is_fillEqually_and_all_items_are_fixed_size_should_return_expected_frames() {
         let stack = HStack(
             spacing: 2,
             thingsToStack: [
@@ -181,26 +232,27 @@ final class HStackTests: XCTestCase {
         )
     }
 
-    func test_framesForLayout_should_return_frames_with_margins() {
+    func test_framesForLayout_when_distribution_is_fillEqually_and_items_are_mixed_should_return_expected_frames() {
+        let label1 = UILabel()
+        label1.text = "Some text"
+        let label2 = UILabel()
+        label2.text = "Some longer text"
+
         let stack = HStack(
             spacing: 2,
-            layoutMargins: .init(
-                top: 10,
-                left: 8,
-                bottom: 10,
-                right: 8
-            ),
             thingsToStack: [
-                UIView().fixed(
-                    size: CGSize(
-                        width: 50,
-                        height: 10
-                    )
-                ),
+                label1,
                 UIView().fixed(
                     size: CGSize(
                         width: 55,
                         height: 11
+                    )
+                ),
+                label2,
+                UIView().fixed(
+                    size: CGSize(
+                        width: 60,
+                        height: 12
                     )
                 )
             ]
@@ -214,25 +266,45 @@ final class HStackTests: XCTestCase {
                 .init(
                     origin: .zero,
                     size: .init(
-                        width: 50,
-                        height: 10
+                        width: 39,
+                        height: 20.5
                     )
                 ),
                 .init(
                     origin: .init(
-                        x: 52,
-                        y: 0 // TODO: HStack is currently not respecting margins
+                        x: 41,
+                        y: 0
                     ),
                     size: .init(
                         width: 55,
                         height: 11
                     )
+                ),
+                .init(
+                    origin: .init(
+                        x: 98,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 39,
+                        height: 20.5
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 139,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 60,
+                        height: 12
+                    )
                 )
             ]
         )
     }
-
-    func test_framesForLayout_should_return_frames_for_nested_vstack() {
+    
+    func test_framesForLayout_when_distribution_is_fillEqually_and_having_vstack_as_children_should_return_expected_frames() {
         let stack = HStack(
             spacing: 2,
             thingsToStack: [
@@ -298,19 +370,91 @@ final class HStackTests: XCTestCase {
         )
     }
     
-    func test_framesForLayout_should_return_frames_for_nested_vstack_with_fixed_width() {
+    func test_framesForLayout_when_distribution_is_fillEqually_and_having_children_with_distribution_fillEqually_should_return_expected_frames() {
+        let label1 = UILabel()
+        label1.text = "Text"
+        let label2 = UILabel()
+        label2.text = "Some text"
+        let label3 = UILabel()
+        label3.text = "Some longer text"
+        
+        let stack = HStack(
+            spacing: 4,
+            thingsToStack: [
+                label1,
+                HStack(
+                    spacing: 8,
+                    thingsToStack: [
+                        label2,
+                        UIView().fixed(
+                            size: .init(
+                                width: 20,
+                                height: 16
+                            )
+                        ),
+                        label3
+                    ]
+                )
+            ]
+        )
+        
+        let frames = stack.framesForLayout(200)
+        
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 98,
+                        height: 20.5
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 102,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 31,
+                        height: 20.5
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 141,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 20,
+                        height: 16
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 169,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 31,
+                        height: 20.5
+                    )
+                )
+            ]
+        )
+    }
+    
+    func test_framesForLayout_when_distribution_is_fillEqually_should_return_frames_for_nested_vstack_with_fixed_width() {
+        let label = UILabel()
+        label.text = "Some longer longer text"
+        
         let stack = HStack(
             spacing: 2,
             thingsToStack: [
                 VStack(
                     spacing: 1,
                     thingsToStack: [
-                        UIView().fixed(
-                            size: .init(
-                                width: 100,
-                                height: 10
-                            )
-                        ),
+                        label,
                         UIView().fixed(
                             size: .init(
                                 width: 100,
@@ -338,13 +482,13 @@ final class HStackTests: XCTestCase {
                     origin: .zero,
                     size: .init(
                         width: 50,
-                        height: 10
+                        height: 20.5
                     )
                 ),
                 .init(
                     origin: .init(
                         x: 0,
-                        y: 11
+                        y: 21.5
                     ),
                     size: .init(
                         width: 50,
@@ -365,7 +509,85 @@ final class HStackTests: XCTestCase {
         )
     }
     
-    func test_framesForLayout_when_distribution_is_fill_should_return_expected_frames() {
+    func test_framesForLayout_when_distribution_is_fill_and_all_items_are_fixed_size_should_return_expected_frames_with_dropped_last_item_that_exceed_hstack_width() {
+        let stack = HStack(
+            spacing: 4,
+            distribution: .fill,
+            thingsToStack: [
+                UIView().fixed(
+                    size: .init(
+                        width: 20,
+                        height: 14
+                    )
+                ),
+                UIView().fixed(
+                    size: .init(
+                        width: 100,
+                        height: 14
+                    )
+                ),
+                UIView().fixed(
+                    size: .init(
+                        width: 145,
+                        height: 14
+                    )
+                ),
+                UIView().fixed(
+                    size: .init(
+                        width: 120,
+                        height: 14
+                    )
+                ),
+            ]
+        )
+        
+        let frames = stack.framesForLayout(200)
+        
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 20,
+                        height: 14
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 24,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 100,
+                        height: 14
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 128,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 72,
+                        height: 14
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 204,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 0,
+                        height: 14
+                    )
+                )
+            ]
+        )
+    }
+    
+    func test_framesForLayout_when_distribution_is_fill_and_items_are_mixed_should_return_expected_frames_with_dropped_last_item_that_exceed_hstack_width() {
         let label1 = UILabel()
         label1.text = "Some text"
         let label2 = UILabel()
@@ -429,6 +651,100 @@ final class HStackTests: XCTestCase {
                     size: .init(
                         width: 0,
                         height: 20.5
+                    )
+                )
+            ]
+        )
+    }
+    
+    func test_framesForLayout_when_distribution_is_fill_and_having_vstack_as_children_should_return_expected_frames() {
+        let label1 = UILabel()
+        label1.text = "Some text"
+        let label2 = UILabel()
+        label2.text = "Some longer text"
+
+        let stack = HStack(
+            spacing: 2,
+            distribution: .fill,
+            thingsToStack: [
+                VStack(
+                    spacing: 1,
+                    thingsToStack: [
+                        UIView().fixed(
+                            size: .init(
+                                width: 50,
+                                height: 10
+                            )
+                        ),
+                        UIView().fixed(
+                            size: .init(
+                                width: 55,
+                                height: 11
+                            )
+                        )
+                    ]
+                ),
+                label1,
+                label2,
+                UIView().fixed(
+                    size: .init(
+                        width: 100,
+                        height: 12
+                    )
+                )
+            ]
+        )
+        
+        let frames = stack.framesForLayout(200)
+
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 50,
+                        height: 10
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 0,
+                        y: 11
+                    ),
+                    size: .init(
+                        width: 55,
+                        height: 11
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 57,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 77,
+                        height: 20.5
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 136,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 64,
+                        height: 20.5
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 202,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 0,
+                        height: 12
                     )
                 )
             ]
@@ -521,6 +837,74 @@ final class HStackTests: XCTestCase {
                     size: .init(
                         width: 0,
                         height: 14
+                    )
+                )
+            ]
+        )
+    }
+    
+    func test_framesForLayout_when_distribution_is_fill_should_return_frames_for_nested_vstack_with_fixed_width() {
+        let stack = HStack(
+            spacing: 2,
+            distribution: .fill,
+            thingsToStack: [
+                VStack(
+                    spacing: 1,
+                    thingsToStack: [
+                        UIView().fixed(
+                            size: .init(
+                                width: 100,
+                                height: 10
+                            )
+                        ),
+                        UIView().fixed(
+                            size: .init(
+                                width: 100,
+                                height: 11
+                            )
+                        )
+                    ],
+                    width: 50
+                ),
+                UIView().fixed(
+                    size: .init(
+                        width: 60,
+                        height: 12
+                    )
+                )
+            ]
+        )
+        
+        let frames = stack.framesForLayout(200)
+        
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 50,
+                        height: 10
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 0,
+                        y: 11
+                    ),
+                    size: .init(
+                        width: 50,
+                        height: 11
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 52,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 60,
+                        height: 12
                     )
                 )
             ]
@@ -687,74 +1071,6 @@ final class HStackTests: XCTestCase {
                     size: .init(
                         width: 30,
                         height: 14
-                    )
-                )
-            ]
-        )
-    }
-    
-    func test_framesForLayout_when_distribution_is_fill_should_return_frames_for_nested_vstack_with_fixed_width() {
-        let stack = HStack(
-            spacing: 2,
-            distribution: .fill,
-            thingsToStack: [
-                VStack(
-                    spacing: 1,
-                    thingsToStack: [
-                        UIView().fixed(
-                            size: .init(
-                                width: 100,
-                                height: 10
-                            )
-                        ),
-                        UIView().fixed(
-                            size: .init(
-                                width: 100,
-                                height: 11
-                            )
-                        )
-                    ],
-                    width: 50
-                ),
-                UIView().fixed(
-                    size: .init(
-                        width: 60,
-                        height: 12
-                    )
-                )
-            ]
-        )
-        
-        let frames = stack.framesForLayout(200)
-        
-        XCTAssertEqual(
-            frames,
-            [
-                .init(
-                    origin: .zero,
-                    size: .init(
-                        width: 50,
-                        height: 10
-                    )
-                ),
-                .init(
-                    origin: .init(
-                        x: 0,
-                        y: 11
-                    ),
-                    size: .init(
-                        width: 50,
-                        height: 11
-                    )
-                ),
-                .init(
-                    origin: .init(
-                        x: 52,
-                        y: 0
-                    ),
-                    size: .init(
-                        width: 60,
-                        height: 12
                     )
                 )
             ]
