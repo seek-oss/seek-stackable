@@ -172,7 +172,10 @@ open class HStack: Stack {
             if let fixedSizeStackWidth = stack.width {
                 return fixedSizeStackWidth
             } else {
-                return width - currentX
+                return min(
+                    width - currentX,
+                    stack.intrinsicContentSize.width
+                )
             }
         }
         else if let item = stackable as? StackableItem {
