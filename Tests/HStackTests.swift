@@ -1076,27 +1076,138 @@ final class HStackTests: XCTestCase {
             ]
         )
     }
-    
-    func test_intrinsicContentSize_should_return_correct_size() {
-        let stack = HStack(spacing: 5, thingsToStack: [
-            UIView().fixed(width: 100, height: 100),
-            UIView().fixed(width: 200, height: 50)
-        ])
-        
-        XCTAssertEqual(stack.intrinsicContentSize, CGSize(width: 305, height: 100))
+
+    func test_intrinsicContentSize_when_distribution_is_fillEqually_and_thingsToStack_empty_should_return_zero() {
+        let stack = HStack(
+            spacing: 5,
+            thingsToStack: []
+        )
+
+        XCTAssertEqual(stack.intrinsicContentSize, .zero)
+    }
+
+    func test_intrinsicContentSize_when_distribution_is_fill_and_thingsToStack_empty_should_return_zero() {
+        let stack = HStack(
+            spacing: 5,
+            distribution: .fill,
+            thingsToStack: []
+        )
+
+        XCTAssertEqual(stack.intrinsicContentSize, .zero)
+    }
+
+    func test_intrinsicContentSize_when_distribution_is_fillEqually_and_width_is_set_should_return_expected_size() {
+        let stack = HStack(
+            spacing: 5,
+            thingsToStack: [
+                UIView().fixed(width: 100, height: 100),
+                UIView().fixed(width: 200, height: 50)
+            ],
+            width: 300
+        )
+
+        XCTAssertEqual(
+            stack.intrinsicContentSize,
+            CGSize(width: 305, height: 100)
+        )
+    }
+
+    func test_intrinsicContentSize_when_distribution_is_fill_and_width_is_set_should_return_expected_size() {
+        let label1 = UILabel()
+        label1.text = "Text"
+        let label2 = UILabel()
+        label2.text = "Some text"
+        let label3 = UILabel()
+        label3.text = "Some longer text"
+
+        let stack = HStack(
+            spacing: 5,
+            distribution: .fill,
+            thingsToStack: [
+                label1,
+                label2,
+                label3
+            ],
+            width: 300
+        )
+
+        XCTAssertEqual(
+            stack.intrinsicContentSize,
+            CGSize(width: 248.5, height: 20.5)
+        )
     }
     
-    func test_intrinsicContentSize_should_return_zero_when_items_are_hidden() {
+    func test_intrinsicContentSize_when_distribution_is_fillEqually_and_width_is_not_set_should_return_expected_size() {
+        let stack = HStack(
+            spacing: 5,
+            thingsToStack: [
+                UIView().fixed(width: 100, height: 100),
+                UIView().fixed(width: 200, height: 50)
+            ]
+        )
+
+        XCTAssertEqual(
+            stack.intrinsicContentSize,
+            CGSize(width: 305, height: 100)
+        )
+    }
+
+    func test_intrinsicContentSize_when_distribution_is_fill_and_width_is_not_set_should_return_expected_size() {
+        let label1 = UILabel()
+        label1.text = "Text"
+        let label2 = UILabel()
+        label2.text = "Some text"
+        let label3 = UILabel()
+        label3.text = "Some longer text"
+
+        let stack = HStack(
+            spacing: 5,
+            distribution: .fill,
+            thingsToStack: [
+                label1,
+                label2,
+                label3
+            ]
+        )
+
+        XCTAssertEqual(
+            stack.intrinsicContentSize,
+            CGSize(width: 248.5, height: 20.5)
+        )
+    }
+
+    func test_intrinsicContentSize_when_distribution_is_fillEqually_and_items_are_hidden_should_return_zero() {
         let view1 = UIView()
         view1.isHidden = true
         let view2 = UIView()
         view2.isHidden = true
-        
-        let stack = HStack(spacing: 5, thingsToStack: [
-            view1.fixed(width: 100, height: 100),
-            view2.fixed(width: 200, height: 50)
-        ])
-        
+
+        let stack = HStack(
+            spacing: 5,
+            thingsToStack: [
+                view1.fixed(width: 100, height: 100),
+                view2.fixed(width: 200, height: 50)
+            ]
+        )
+
+        XCTAssertEqual(stack.intrinsicContentSize, .zero)
+    }
+
+    func test_intrinsicContentSize_when_distribution_is_fill_and_items_are_hidden_should_return_zero() {
+        let view1 = UIView()
+        view1.isHidden = true
+        let view2 = UIView()
+        view2.isHidden = true
+
+        let stack = HStack(
+            spacing: 5,
+            distribution: .fill,
+            thingsToStack: [
+                view1.fixed(width: 100, height: 100),
+                view2.fixed(width: 200, height: 50)
+            ]
+        )
+
         XCTAssertEqual(stack.intrinsicContentSize, .zero)
     }
 }
