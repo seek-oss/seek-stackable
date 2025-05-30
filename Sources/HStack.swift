@@ -8,8 +8,13 @@ open class HStack: Stack {
         case fillEqually
         case fill
     }
+    public enum Alignment: Equatable {
+        case top
+        case bottom
+    }
     public let spacing: CGFloat
     public let distribution: Distribution
+    public let alignment: Alignment
     public let layoutMargins: UIEdgeInsets
     public let thingsToStack: [Stackable]
     public let width: CGFloat?
@@ -17,6 +22,7 @@ open class HStack: Stack {
     public init(
         spacing: CGFloat = 0.0,
         distribution: Distribution = .fillEqually,
+        alignment: Alignment = .top,
         layoutMargins: UIEdgeInsets = .zero,
         thingsToStack: [Stackable],
         width: CGFloat? = nil
@@ -26,11 +32,13 @@ open class HStack: Stack {
         self.layoutMargins = layoutMargins
         self.thingsToStack = thingsToStack
         self.width = width
+        self.alignment = alignment
     }
     
     public convenience init(
         spacing: CGFloat = 0.0,
         distribution: Distribution = .fillEqually,
+        alignment: Alignment = .top,
         layoutMargins: UIEdgeInsets = .zero,
         width: CGFloat? = nil,
         thingsToStack: () -> [Stackable]
@@ -38,6 +46,7 @@ open class HStack: Stack {
         self.init(
             spacing: spacing,
             distribution: distribution,
+            alignment: alignment,
             layoutMargins: layoutMargins,
             thingsToStack: thingsToStack(),
             width: width
@@ -47,7 +56,7 @@ open class HStack: Stack {
     open func framesForLayout(_ width: CGFloat, origin: CGPoint) -> [CGRect] {
         // TODO: add adjustments for layoutMargins (not currently needed so okay to defer)
 
-        var frames: [CGRect] = []
+        var frameGroups: [[CGRect]] = []
         var currentX = origin.x
         let currentY = origin.y
         
@@ -56,34 +65,58 @@ open class HStack: Stack {
                 for: stackable,
                 width: width,
                 currentX: currentX,
-                frames: frames
+                frames: frameGroups.flatMap { $0 }
             )
-            
+
             if let stack = stackable as? Stack {
-                frames.append(
-                    contentsOf: stack.framesForLayout(
-                        stackableWidth,
-                        origin: CGPoint(
-                            x: currentX,
-                            y: currentY
-                        )
+                frameGroups.append(stack.framesForLayout(
+                    stackableWidth,
+                    origin: CGPoint(
+                        x: currentX,
+                        y: currentY
                     )
-                )
+                ))
             } else if let item = stackable as? StackableItem {
-                frames.append(
+                frameGroups.append([
                     .init(
                         x: currentX,
                         y: currentY,
                         width: stackableWidth,
                         height: item.heightForWidth(stackableWidth)
                     )
-                )
+                ])
             }
-            
+
             currentX += stackableWidth + spacing
         }
         
-        return frames
+        switch alignment {
+        case .top:
+            return frameGroups.flatMap { $0 }
+        case .bottom:
+            let frameGroupsMaxHeight = frameGroups.flatMap { $0 }.maxY - origin.y
+            var frames: [CGRect] = []
+
+            for group in frameGroups {
+                let groupHeight = group.maxY - origin.y
+
+                if groupHeight < frameGroupsMaxHeight {
+                    let frameYOffset = frameGroupsMaxHeight - groupHeight
+
+                    group.forEach {
+                        var frame = $0
+                        frame.origin.y += frameYOffset
+                        frames.append(
+                            frame
+                        )
+                    }
+                } else {
+                    frames.append(contentsOf: group)
+                }
+            }
+
+            return frames
+        }
     }
     
     public var intrinsicContentSize: CGSize {

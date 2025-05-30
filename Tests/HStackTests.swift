@@ -20,6 +20,10 @@ final class HStackTests: XCTestCase {
             .fillEqually
         )
         XCTAssertEqual(
+            stack.alignment,
+            .top
+        )
+        XCTAssertEqual(
             stack.layoutMargins,
             .zero
         )
@@ -36,6 +40,7 @@ final class HStackTests: XCTestCase {
         let stack = HStack(
             spacing: 8,
             distribution: .fill,
+            alignment: .bottom,
             layoutMargins: .init(
                 top: 10,
                 left: 10,
@@ -55,6 +60,10 @@ final class HStackTests: XCTestCase {
         XCTAssertEqual(
             stack.distribution,
             .fill
+        )
+        XCTAssertEqual(
+            stack.alignment,
+            .bottom
         )
         XCTAssertEqual(
             stack.layoutMargins,
@@ -79,6 +88,7 @@ final class HStackTests: XCTestCase {
         let stack = HStack(
             spacing: 8,
             distribution: .fill,
+            alignment: .bottom,
             layoutMargins: .init(
                 top: 10,
                 left: 10,
@@ -101,6 +111,10 @@ final class HStackTests: XCTestCase {
             .fill
         )
         XCTAssertEqual(
+            stack.alignment,
+            .bottom
+        )
+        XCTAssertEqual(
             stack.layoutMargins,
             .init(
                 top: 10,
@@ -119,7 +133,7 @@ final class HStackTests: XCTestCase {
         )
     }
     
-    func test_framesForLayout_should_return_frames_with_margins() {
+    func test_framesForLayout_when_alignment_top_should_return_frames_with_margins() {
         let stack = HStack(
             spacing: 2,
             layoutMargins: .init(
@@ -132,13 +146,13 @@ final class HStackTests: XCTestCase {
                 UIView().fixed(
                     size: CGSize(
                         width: 50,
-                        height: 10
+                        height: 50
                     )
                 ),
                 UIView().fixed(
                     size: CGSize(
                         width: 55,
-                        height: 11
+                        height: 20
                     )
                 )
             ]
@@ -153,7 +167,7 @@ final class HStackTests: XCTestCase {
                     origin: .zero,
                     size: .init(
                         width: 50,
-                        height: 10
+                        height: 50
                     )
                 ),
                 .init(
@@ -163,7 +177,219 @@ final class HStackTests: XCTestCase {
                     ),
                     size: .init(
                         width: 55,
-                        height: 11
+                        height: 20
+                    )
+                )
+            ]
+        )
+    }
+
+    func test_framesForLayout_when_alignment_bottom_should_return_frames_with_margins() {
+        let stack = HStack(
+            spacing: 2,
+            alignment: .bottom,
+            layoutMargins: .init(
+                top: 10,
+                left: 8,
+                bottom: 10,
+                right: 8
+            ),
+            thingsToStack: [
+                UIView().fixed(
+                    size: CGSize(
+                        width: 50,
+                        height: 50
+                    )
+                ),
+                UIView().fixed(
+                    size: CGSize(
+                        width: 55,
+                        height: 20
+                    )
+                )
+            ]
+        )
+
+        let frames = stack.framesForLayout(200)
+
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 50,
+                        height: 50
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 52,
+                        y: 30
+                    ),
+                    size: .init(
+                        width: 55,
+                        height: 20
+                    )
+                )
+            ]
+        )
+    }
+
+    func test_framesForLayout_when_alignment_bottom_containg_complex_stacks_should_return_frames_with_margins() {
+        let stack = HStack(
+            spacing: 2,
+            alignment: .bottom,
+            layoutMargins: .init(
+                top: 10,
+                left: 8,
+                bottom: 10,
+                right: 8
+            ),
+            thingsToStack: [
+                VStack {
+                    [
+                    UIView().fixed(
+                        size: CGSize(
+                            width: 50,
+                            height: 10
+                        )
+                    ),
+                    UIView().fixed(
+                        size: CGSize(
+                            width: 50,
+                            height: 20
+                        )
+                    ),
+                    ]
+                },
+                VStack {
+                    [
+                    UIView().fixed(
+                        size: CGSize(
+                            width: 50,
+                            height: 30
+                        )
+                    ),
+                    UIView().fixed(
+                        size: CGSize(
+                            width: 50,
+                            height: 20
+                        )
+                    ),
+                    ]
+                },
+            ]
+        )
+
+        let frames = stack.framesForLayout(200)
+
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .init(
+                        x: 0,
+                        y: 20
+                    ),
+                    size: .init(
+                        width: 50,
+                        height: 10
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 0,
+                        y: 30
+                    ),
+                    size: .init(
+                        width: 50,
+                        height: 20
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 101,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 50,
+                        height: 30
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 101,
+                        y: 30
+                    ),
+                    size: .init(
+                        width: 50,
+                        height: 20
+                    )
+                )
+            ]
+        )
+    }
+
+    func test_framesForLayout_when_alignment_bottom_and_all_have_equal_height_should_return_frames() {
+        let stack = HStack(
+            alignment: .bottom,
+            thingsToStack: [
+                UIView().fixed(
+                    size: CGSize(
+                        width: 10,
+                        height: 50
+                    )
+                ),
+                UIView().fixed(
+                    size: CGSize(
+                        width: 10,
+                        height: 50
+                    )
+                ),
+                VStack {
+                    [
+                    UIView().fixed(
+                        size: CGSize(
+                            width: 10,
+                            height: 50
+                        )
+                    )
+                    ]
+                },
+            ]
+        )
+
+        let frames = stack.framesForLayout(200)
+
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .zero,
+                    size: .init(
+                        width: 10,
+                        height: 50
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 10,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 10,
+                        height: 50
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 20,
+                        y: 0
+                    ),
+                    size: .init(
+                        width: 10,
+                        height: 50
                     )
                 )
             ]
