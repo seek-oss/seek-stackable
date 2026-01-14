@@ -49,7 +49,7 @@ open class FlowLayoutStack: HStack {
                 return
             }
 
-            currentX = 0
+            currentX = origin.x
             currentY = frames.reduce(0) { result, rect in
                 max(
                     result,

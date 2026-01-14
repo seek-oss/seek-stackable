@@ -224,6 +224,75 @@ class FlowLayoutStackTests: XCTestCase {
         )
     }
     
+    func test_framesForLayout_when_stack_nested_in_another_stack_with_layoutMargins_should_return_expected() {
+        let stack = VStack(
+            layoutMargins: .init(
+                top: 2,
+                left: 10,
+                bottom: 2,
+                right: 10
+            )
+        ) {
+            [
+                FlowLayoutStack(
+                    itemSpacing: 5,
+                    lineSpacing: 10
+                ) {
+                    [
+                        StackableItemView(
+                            frame: .init(
+                                origin: .zero,
+                                size: CGSize(
+                                    width: 250,
+                                    height: 10
+                                )
+                            )
+                        ),
+                        HStack(
+                            thingsToStack: [
+                                UIView().fixed(
+                                    size: CGSize(
+                                        width: 100,
+                                        height: 10
+                                    )
+                                )
+                            ],
+                            width: 100
+                        )
+                    ]
+                }
+            ]
+        }
+
+        let frames = stack.framesForLayout(300)
+
+        XCTAssertEqual(
+            frames,
+            [
+                .init(
+                    origin: .init(
+                        x: 10,
+                        y: 2
+                    ),
+                    size: .init(
+                        width: 250,
+                        height: 10
+                    )
+                ),
+                .init(
+                    origin: .init(
+                        x: 10,
+                        y: 22
+                    ),
+                    size: .init(
+                        width: 100,
+                        height: 10
+                    )
+                ),
+            ]
+        )
+    }
+
     func test_framesForLayout_when_thingsToStack_contain_stacks_should_return_expected() {
         let stack = FlowLayoutStack(
             itemSpacing: 5,
